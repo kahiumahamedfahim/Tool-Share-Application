@@ -1,0 +1,136 @@
+/* =========================
+   Tool Create Page
+   ========================= */
+
+body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #f4f7fb;
+    color: #212529;
+}
+
+/* =========================
+   Page Title
+   ========================= */
+
+h2 {
+    margin: 20px 0;
+    text-align: center;
+    color: #0d6efd;
+}
+
+/* =========================
+   Messages
+   ========================= */
+
+p {
+    max-width: 520px;
+    margin: 10px auto;
+    padding: 10px 14px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+p:contains("success") {
+    background: #e7f1ff;
+    color: #084298;
+}
+
+p:contains("error") {
+    background: #f8d7da;
+    color: #842029;
+}
+
+/* =========================
+   Form Container
+   ========================= */
+
+form {
+    max-width: 520px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 22px 24px;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   Labels
+   ========================= */
+
+label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    display: inline-block;
+}
+
+/* =========================
+   Inputs
+   ========================= */
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 6px;
+    margin-bottom: 14px;
+    border: 1px solid #dce1eb;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Focus */
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.15);
+}
+
+/* =========================
+   File Input
+   ========================= */
+
+input[type="file"] {
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+/* =========================
+   Submit Button
+   ========================= */
+
+button {
+    width: 100%;
+    padding: 11px;
+    background: #0d6efd;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+button:hover {
+    background: #0b5ed7;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 600px) {
+    form {
+        margin: 10px;
+        padding: 18px;
+    }
+}
