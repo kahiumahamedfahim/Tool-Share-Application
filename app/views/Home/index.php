@@ -32,7 +32,7 @@ require_once __DIR__ . '/../layouts/header.php';
                 <th>Location</th>
                 <th>Owner</th> 
                 <th>Details</th>
-                <th>Action</th>
+             
                 
             </tr>
         </thead>
@@ -72,19 +72,7 @@ require_once __DIR__ . '/../layouts/header.php';
 </a>
 
 
-                    <td>
-                        <?php if (!isset($_SESSION['user'])): ?>
-                            <a href="?url=user/login">Login to Rent</a>
-
-                        <?php elseif ($_SESSION['user']['role'] === 'ADMIN'): ?>
-                            <span>Rent not allowed</span>
-
-                        <?php else: ?>
-                            <a href="?url=rent/request&tool_id=<?= (int)$tool['id'] ?>">
-                                Rent Now
-                            </a>
-                        <?php endif; ?>
-                    </td>
+                   
                 </tr>
             <?php endforeach; ?>
         </tbody>

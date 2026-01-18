@@ -142,5 +142,148 @@ class RentRepository
 
         return $stmt->rowCount() > 0;
     }
+    /* =========================
+   Get Rent Requests for Renter (UI Ready)
+   ========================= */
+public function getDetailedRequestsByRenter(string $renterId): array
+{
+    $sql = "
+        SELECT
+            rr.id AS rent_id,
+            rr.start_date,
+            rr.end_date,
+            rr.status,
+
+            t.name AS tool_name,
+
+            (
+                SELECT ti.image_path
+                FROM tool_images ti
+                WHERE ti.tool_id = t.id
+                ORDER BY ti.id ASC
+                LIMIT 1
+            ) AS tool_image,
+
+            u.name AS owner_name,
+            u.profile_image AS owner_image
+
+        FROM rent_requests rr
+        JOIN tools t ON t.id = rr.tool_id
+        JOIN users u ON u.id = rr.owner_id
+
+        WHERE rr.renter_id = ?
+        ORDER BY rr.created_at DESC
+    ";
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$renterId]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+/* =========================
+   Get Incoming Rent Requests for Owner (UI Ready)
+   ========================= */
+public function getDetailedRequestsByOwner(string $ownerId): array
+{
+    $sql = "
+        SELECT
+            rr.id AS rent_id,
+            rr.start_date,
+            rr.end_date,
+            rr.status,
+
+            t.name AS tool_name,
+
+            (
+                SELECT ti.image_path
+                FROM tool_images ti
+                WHERE ti.tool_id = t.id
+                ORDER BY ti.id ASC
+                LIMIT 1
+            ) AS tool_image,
+
+            u.name AS renter_name,
+            u.profile_image AS renter_image
+
+        FROM rent_requests rr
+        JOIN tools t ON t.id = rr.tool_id
+        JOIN users u ON u.id = rr.renter_id
+
+        WHERE rr.owner_id = ?
+        ORDER BY rr.created_at DESC
+    ";
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$ownerId]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+/* =========================
+   Get Rent With Tool Info (For Return)
+   ========================= */
+public function getRentWithTool(string $rentId): ?array
+{
+    $sql = "
+        SELECT
+            rr.id,
+            rr.tool_id,
+            rr.owner_id,
+            rr.renter_id,
+            rr.status
+        FROM rent_requests rr
+        WHERE rr.id = ?
+        LIMIT 1
+    ";
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$rentId]);
+
+    $rent = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $rent ?: null;
+}
+/* =========================
+   Admin: Get All Rent Requests (UI Ready with Images)
+   ========================= */
+public function getAllDetailedRequests(): array
+{
+    $sql = "
+        SELECT
+            rr.id AS rent_id,
+            rr.start_date,
+            rr.end_date,
+            rr.status,
+            rr.created_at,
+
+            t.name AS tool_name,
+
+            (
+                SELECT ti.image_path
+                FROM tool_images ti
+                WHERE ti.tool_id = t.id
+                ORDER BY ti.id ASC
+                LIMIT 1
+            ) AS tool_image,
+
+            owner.name AS owner_name,
+            owner.profile_image AS owner_image,
+
+            renter.name AS renter_name,
+            renter.profile_image AS renter_image
+
+        FROM rent_requests rr
+        JOIN tools t ON t.id = rr.tool_id
+        JOIN users owner ON owner.id = rr.owner_id
+        JOIN users renter ON renter.id = rr.renter_id
+
+        ORDER BY rr.created_at DESC
+    ";
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
     
 }

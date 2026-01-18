@@ -18,14 +18,20 @@
             <!-- Logged in -->
             <?php else: ?>
                 <?php if (isset($_SESSION['user']) && in_array($_SESSION['user']['role'], ['USER', 'VENDOR'])): ?>
-    <a href="?url=tool/create">Create Tool</a>
+    
     <a href="?url=user/ViewForAllUser">Home</a>
+     <a href="?url=rent/myRequests">My Rent Requests</a>
+     <a href="?url=rent/ownerRequests">Incoming Requests</a>
+     <a href="?url=tool/create">Create Tool</a>
     
 <?php endif; ?>
 
 
                 <!-- Admin Menus -->
                 <?php if ($_SESSION['user']['role'] === 'ADMIN'): ?>
+                    <a href="?url=rent/adminRequests">
+            All Rent Requests
+        </a>
                     <a href="?url=user/ViewForAllUser">Home</a>
                     <a href="?url=admin/users">All Users</a>
                     <a href="?url=admin/vendors">All Vendors</a>

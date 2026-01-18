@@ -91,20 +91,45 @@ require_once __DIR__ . '/../layouts/header.php';
     <!-- Action -->
     <h4>Action</h4>
 
-    <?php if (!isset($_SESSION['user'])): ?>
-        <a href="?url=user/login">Login to Rent</a>
+<?php if (!isset($_SESSION['user'])): ?>
 
-    <?php elseif ($_SESSION['user']['role'] === 'ADMIN'): ?>
-        <p>Rent not allowed</p>
+    <a href="?url=user/login">Login to Rent</a>
 
-    <?php elseif ($tool['quantity'] <= 0): ?>
-        <p>Out of stock</p>
+<?php elseif ($_SESSION['user']['role'] === 'ADMIN'): ?>
 
-    <?php else: ?>
-        <a href="?url=rent/request&tool_id=<?= htmlspecialchars($tool['id']) ?>" class="rent-btn">
-            Rent Now
-        </a>
-    <?php endif; ?>
+    <p>Rent not allowed</p>
+
+<?php elseif ($tool['quantity'] <= 0): ?>
+
+    <p>Out of stock</p>
+
+<?php elseif ($_SESSION['user']['id'] === $tool['user_id']): ?>
+
+    <p>You cannot rent your own tool</p>
+
+<?php else: ?>
+
+    <form action="?url=rent/request" method="POST">
+        <input type="hidden" name="tool_id" value="<?= htmlspecialchars($tool['id']) ?>">
+
+        <label>Start Date</label><br>
+        <input type="date" name="start_date" required><br><br>
+
+        <label>End Date</label><br>
+        <input type="date" name="end_date" required><br><br>
+
+        <label>Quantity</label><br>
+        <input type="number" name="quantity"
+               min="1"
+               max="<?= htmlspecialchars($tool['quantity']) ?>"
+               value="1" required><br><br>
+
+        <button type="submit">Send Rent Request</button>
+    </form>
+
+<?php endif; ?>
+
+
 
     <hr>
 

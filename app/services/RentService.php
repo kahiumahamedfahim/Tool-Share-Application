@@ -201,4 +201,103 @@ public function getRequestsForRenter(string $renterId): array
 {
     return $this->rentRepo->getByRenter($renterId);
 }
+/* =========================
+   Get My Rent Requests (User)
+   ========================= */
+public function getMyRentRequests(string $renterId): array
+{
+    // No business rule here
+    // Just delegate to repository
+    return $this->rentRepo->getDetailedRequestsByRenter($renterId);
+}
+public function getIncomingRequestsForOwner(string $ownerId): array
+{
+    // Thin service: no logic, just delegate
+    return $this->rentRepo->getDetailedRequestsByOwner($ownerId);
+}
+/* =========================
+   Renter: Request Tool Return
+   ========================= */
+public function requestReturn(string $rentId, array $currentUser): array
+{
+    if (empty($currentUser)) {
+        return ['success' => false, 'message' => 'Login required'];
+    }
+
+    $rent = $this->rentRepo->getRentWithTool($rentId);
+
+    if (!$rent) {
+        return ['success' => false, 'message' => 'Rent not found'];
+    }
+
+    // 🔒 Only renter can request return
+    if ($rent['renter_id'] !== $currentUser['id']) {
+        return ['success' => false, 'message' => 'Unauthorized'];
+    }
+
+    // 🔹 Only ACCEPTED can be returned
+    if ($rent['status'] !== 'ACCEPTED') {
+        return ['success' => false, 'message' => 'Return not allowed'];
+    }
+
+    $this->rentRepo->updateStatus($rentId, 'RETURN_REQUESTED');
+
+    return [
+        'success' => true,
+        'message' => 'Return request sent to owner'
+    ];
+}
+/* =========================
+   Owner: Confirm Tool Return
+   ========================= */
+public function confirmReturn(string $rentId, array $currentUser): array
+{
+    if (empty($currentUser)) {
+        return ['success' => false, 'message' => 'Login required'];
+    }
+
+    $rent = $this->rentRepo->getRentWithTool($rentId);
+
+    if (!$rent) {
+        return ['success' => false, 'message' => 'Rent not found'];
+    }
+
+    // 🔒 Only owner can confirm
+    if ($rent['owner_id'] !== $currentUser['id']) {
+        return ['success' => false, 'message' => 'Unauthorized'];
+    }
+
+    // 🔹 Only RETURN_REQUESTED can be confirmed
+    if ($rent['status'] !== 'RETURN_REQUESTED') {
+        return ['success' => false, 'message' => 'Invalid return state'];
+    }
+
+    // 🔹 Update status
+    $this->rentRepo->updateStatus($rentId, 'RETURNED');
+
+    // 🔹 Increase tool quantity
+    $tool = $this->toolRepo->getById($rent['tool_id']);
+
+    $this->toolRepo->updateQuantity(
+        $tool['id'],
+        $tool['quantity'] + 1
+    );
+
+    return [
+        'success' => true,
+        'message' => 'Tool returned successfully'
+    ];
+}
+/* =========================
+   Admin: Get All Rent Requests
+   ========================= */
+public function getAllRentRequestsForAdmin(): array
+{
+    // Admin is read-only here
+    // Just delegate to repository
+    return $this->rentRepo->getAllDetailedRequests();
+}
+
+
+
 }
