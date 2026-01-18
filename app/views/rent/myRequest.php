@@ -3,7 +3,7 @@ require_once __DIR__ . '/../layouts/header.php';
 ?>
 <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
 <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/rent.css">
+<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/myrentRequset.css">
 <h2>My Rent Requests</h2>
 
 <?php if (empty($requests)): ?>
@@ -32,7 +32,7 @@ require_once __DIR__ . '/../layouts/header.php';
             <img
                 src="/tool_sharing_application/public/<?= htmlspecialchars($req['owner_image']) ?>"
                 alt="Owner Image"
-                width="60"
+                width="80"
             >
         <?php endif; ?>
 

@@ -61,16 +61,28 @@ class ToolRepository
    
 
     public function getByUser(string $userId): array
-    {
-        $stmt = $this->db->prepare(
-            "SELECT * FROM tools
-             WHERE user_id = ?
-             ORDER BY created_at DESC"
-        );
-        $stmt->execute([$userId]);
+{
+    $sql = "
+        SELECT
+            t.*,
+            (
+                SELECT ti.image_path
+                FROM tool_images ti
+                WHERE ti.tool_id = t.id
+                ORDER BY ti.id ASC
+                LIMIT 1
+            ) AS image
+        FROM tools t
+        WHERE t.user_id = ?
+        ORDER BY t.created_at DESC
+    ";
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$userId]);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 
     /* =========================
        Update Tool Quantity
@@ -241,6 +253,39 @@ public function getById(string $id): ?array
     $tool = $stmt->fetch(PDO::FETCH_ASSOC);
 
     return $tool ?: null;
+}
+
+public function delete(string $toolId): bool
+{
+    $stmt = $this->db->prepare(
+        "DELETE FROM tools WHERE id = ?"
+    );
+    $stmt->execute([$toolId]);
+
+    return $stmt->rowCount() > 0;
+}
+public function update(string $toolId, array $data): bool
+{
+    $sql = "
+        UPDATE tools SET
+            name = :name,
+            price_per_day = :price,
+            quantity = :qty,
+            location = :location,
+            description = :description
+        WHERE id = :id
+    ";
+
+    $stmt = $this->db->prepare($sql);
+
+    return $stmt->execute([
+        'name' => $data['name'],
+        'price' => $data['price_per_day'],
+        'qty' => $data['quantity'],
+        'location' => $data['location'],
+        'description' => $data['description'],
+        'id' => $toolId
+    ]);
 }
 
 

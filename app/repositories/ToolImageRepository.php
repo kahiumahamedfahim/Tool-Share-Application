@@ -49,4 +49,16 @@ class ToolImageRepository
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function delete(string $imageId): bool
+{
+    $stmt = $this->db->prepare(
+        "DELETE FROM tool_images WHERE id = ?"
+    );
+    $stmt->execute([$imageId]);
+
+    return $stmt->rowCount() > 0;
+}
+
+
+
 }

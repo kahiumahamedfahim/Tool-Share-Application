@@ -1,128 +1,233 @@
 /* =========================
-   Rent Pages
+   Rent Page Wrapper
    ========================= */
 
-body {
+.rent-page {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 16px;
     font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-    background: #f4f7fb;
     color: #212529;
 }
 
-h2 {
+/* Page title */
+.page-title {
     text-align: center;
     color: #0d6efd;
-    margin: 20px 0;
+    margin-bottom: 25px;
+}
+
+/* Empty state */
+.no-requests {
+    text-align: center;
+    color: #6c757d;
+    font-size: 15px;
 }
 
 /* =========================
-   Table
+   Rent Grid
    ========================= */
 
-table {
-    width: 95%;
-    max-width: 1100px;
-    margin: 0 auto 30px;
-    border-collapse: collapse;
+.rent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+/* =========================
+   Rent Card
+   ========================= */
+
+.rent-card {
     background: #ffffff;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-    border-radius: 8px;
-    overflow: hidden;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-thead {
-    background: #0d6efd;
-    color: #ffffff;
+.rent-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
-th, td {
-    padding: 12px 10px;
-    text-align: center;
+/* =========================
+   Tool Section
+   ========================= */
+
+.rent-tool {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.tool-name {
+    font-size: 16px;
+    margin: 0;
+    color: #212529;
+}
+
+/* =========================
+   Renter Section
+   ========================= */
+
+.rent-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.user-name {
+    margin: 0;
     font-size: 14px;
 }
 
-tbody tr:nth-child(even) {
-    background: #f8f9fa;
-}
+/* =========================
+   Rent Period
+   ========================= */
 
-tbody tr:hover {
-    background: #eef4ff;
+.rent-period {
+    font-size: 14px;
+    margin: 10px 0;
+    color: #495057;
 }
 
 /* =========================
-   Status Badges
+   Status Badge
    ========================= */
 
-.status {
+.status-badge {
+    display: inline-block;
     padding: 4px 10px;
     border-radius: 12px;
     font-size: 12px;
     font-weight: 600;
-    display: inline-block;
+    text-transform: uppercase;
 }
 
-.status.REQUESTED {
+/* Status colors */
+.status-badge.requested {
     background: #fff3cd;
     color: #856404;
 }
 
-.status.ACCEPTED {
+.status-badge.accepted {
     background: #d1e7dd;
     color: #0f5132;
 }
 
-.status.REJECTED {
+.status-badge.rejected {
     background: #f8d7da;
     color: #842029;
 }
 
-.status.CANCELLED {
-    background: #e2e3e5;
-    color: #41464b;
-}
-
-.status.RENTED {
+.status-badge.return_requested {
     background: #cff4fc;
     color: #055160;
 }
 
-.status.RETURNED {
+.status-badge.returned {
     background: #e7f1ff;
     color: #084298;
 }
 
 /* =========================
-   Action Buttons
+   Actions
    ========================= */
 
-a.btn {
-    padding: 6px 12px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 13px;
+.rent-actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
-a.btn-accept {
+.btn {
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* Accept */
+.btn-accept {
     background: #198754;
     color: #ffffff;
 }
 
-a.btn-reject,
-a.btn-cancel {
+.btn-accept:hover {
+    background: #157347;
+}
+
+/* Reject */
+.btn-reject {
     background: #dc3545;
     color: #ffffff;
 }
 
-a.btn:hover {
-    opacity: 0.9;
+.btn-reject:hover {
+    background: #bb2d3b;
 }
+
+/* =========================
+   Divider
+   ========================= */
+
+hr {
+    border: none;
+    border-top: 1px solid #e9ecef;
+    margin: 20px 0;
+}
+/* FORCE buttons visible */
+.rent-actions a {
+    display: inline-block !important;
+}
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+}
+.btn-accept {
+    background: #198754;
+    color: #ffffff !important;
+}
+
+.btn-accept:hover {
+    background: #157347;
+}
+
+.btn-reject {
+    background: #dc3545;
+    color: #ffffff !important;
+}
+
+.btn-reject:hover {
+    background: #bb2d3b;
+}
+
+
+
 
 /* =========================
    Responsive
    ========================= */
 
-@media (max-width: 768px) {
-    table, thead, tbody, th, td, tr {
-        font-size: 12px;
+@media (max-width: 576px) {
+    .rent-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-name {
+        font-size: 15px;
     }
 }

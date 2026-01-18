@@ -1,78 +1,119 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
+
 <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
 <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
 <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/rent.css">
 
-<h2>Incoming Rent Requests</h2>
 
-<?php if (empty($requests)): ?>
-    <p>No incoming rent requests.</p>
+<div class="rent-page">
+
+    <h2 class="page-title">Incoming Rent Requests</h2>
+
+    <?php if (empty($requests)): ?>
+        <p class="no-requests">No incoming rent requests.</p>
+    <?php endif; ?>
+
+    <div class="rent-grid">
+
+        <?php foreach ($requests as $req): ?>
+
+            <div class="rent-card">
+
+                <!-- Tool Section -->
+                <div class="rent-tool">
+                    <img
+                        src="/tool_sharing_application/public/<?= htmlspecialchars($req['tool_image'] ?? 'uploads/default-tool.png') ?>"
+                        alt="Tool Image"
+                        class="tool-image"
+                        width="48"
+    height="48"
+    style="
+        width:100px;
+        height:80px;
+        object-fit:cover;
+   
+        border:1px solid #dee2e6;
+        background:#e9ecef;
+        flex-shrink:0;
+    "
+                    >
+
+                    <h3 class="tool-name">
+                        <?= htmlspecialchars($req['tool_name']) ?>
+                    </h3>
+                </div>
+
+                <!-- Renter Section -->
+                <div class="rent-user">
+                   <img
+    src="/tool_sharing_application/public/<?= htmlspecialchars($req['renter_image'] ?? 'uploads/default-user.png') ?>"
+    alt="Renter Image"
+    width="48"
+    height="48"
+    style="
+        width:80px;
+        height:80px;
+        object-fit:cover;
+        border-radius:50%;
+        border:1px solid #dee2e6;
+        background:#e9ecef;
+        flex-shrink:0;
+    "
+>
+
+                    <p class="user-name">
+                        <strong>Renter:</strong>
+                        <?= htmlspecialchars($req['renter_name']) ?>
+                    </p>
+                </div>
+
+                <!-- Rent Period -->
+                <p class="rent-period">
+                    <strong>Period:</strong>
+                    <?= htmlspecialchars($req['start_date']) ?>
+                    →
+                    <?= htmlspecialchars($req['end_date']) ?>
+                </p>
+
+                <!-- Status -->
+                <span class="status-badge <?= strtolower($req['status']) ?>">
+                    <?= htmlspecialchars($req['status']) ?>
+                </span>
+                <br> <br>
+
+                <!-- Actions -->
+               <div class="rent-actions">
+
+<?php if (strtoupper($req['status']) === 'REQUESTED'): ?>
+    <a class="btn btn-accept"
+       href="?url=rent/accept&id=<?= htmlspecialchars($req['rent_id']) ?>">
+        Accept
+    </a>
+
+    <a class="btn btn-reject"
+       href="?url=rent/reject&id=<?= htmlspecialchars($req['rent_id']) ?>">
+        Reject
+    </a>
 <?php endif; ?>
 
-<?php foreach ($requests as $req): ?>
-
-    <div class="rent-card">
-
-        <!-- Tool Image -->
-        <?php if (!empty($req['tool_image'])): ?>
-            <img
-                src="/tool_sharing_application/public/<?= htmlspecialchars($req['tool_image']) ?>"
-                alt="Tool Image"
-                width="140"
-            >
-        <?php endif; ?>
-
-        <p><strong>Tool:</strong> <?= htmlspecialchars($req['tool_name']) ?></p>
-
-        <!-- Renter Info -->
-        <p><strong>Renter:</strong> <?= htmlspecialchars($req['renter_name']) ?></p>
-
-        <?php if (!empty($req['renter_image'])): ?>
-            <img
-                src="/tool_sharing_application/public/<?= htmlspecialchars($req['renter_image']) ?>"
-                alt="Renter Image"
-                width="60"
-            >
-        <?php endif; ?>
-
-        <!-- Rent Period -->
-        <p>
-            <strong>Rent Period:</strong>
-            <?= htmlspecialchars($req['start_date']) ?>
-            →
-            <?= htmlspecialchars($req['end_date']) ?>
-        </p>
-
-        <!-- Status -->
-        <p>
-            <strong>Status:</strong> <?= htmlspecialchars($req['status']) ?>
-        </p>
-
-        <!-- Actions -->
-        <?php if ($req['status'] === 'REQUESTED'): ?>
-            <a href="?url=rent/accept&id=<?= htmlspecialchars($req['rent_id']) ?>">
-                Accept
-            </a>
-            |
-            <a href="?url=rent/reject&id=<?= htmlspecialchars($req['rent_id']) ?>">
-                Reject
-            </a>
-        <?php endif; ?>
-        <!-- Confirm Return (Owner) -->
-<?php if ($req['status'] === 'RETURN_REQUESTED'): ?>
-    <a href="?url=rent/confirmReturn&id=<?= htmlspecialchars($req['rent_id']) ?>">
+<?php if (strtoupper($req['status']) === 'RETURN_REQUESTED'): ?>
+    <a class="btn btn-accept"
+       href="?url=rent/confirmReturn&id=<?= htmlspecialchars($req['rent_id']) ?>">
         Confirm Return
     </a>
 <?php endif; ?>
 
+</div>
 
-        <hr>
+
+            </div>
+            <br><br>
+<hr>
+        <?php endforeach; ?>
+
     </div>
+</div>
 
-<?php endforeach; ?>
-
-<?php
-require_once __DIR__ . '/../layouts/footer.php';
-?>
+<?php require_once __DIR__ . '/../layouts/footer.php'; ?>
 
 <script src="/tool_sharing_application/app/assets/js/header.js"></script>

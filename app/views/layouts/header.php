@@ -3,43 +3,43 @@
 
         <!-- Logo -->
         <div class="nav-logo">
-            
+            <a href="?url=user/ViewForAllUser" class="logo-text">
+                🔧 ToolShare
+                <span class="logo-sub">Tool Sharing Application</span>
+            </a>
         </div>
 
-        <!-- Right Menu -->
+        <!-- Navigation -->
         <nav class="nav-menu">
 
             <!-- Guest -->
             <?php if (!isset($_SESSION['user'])): ?>
                 <a href="?url=user/login">Login</a>
                 <a href="?url=user/register" class="btn-primary">Register</a>
-               
 
-            <!-- Logged in -->
+            <!-- Logged In -->
             <?php else: ?>
-                <?php if (isset($_SESSION['user']) && in_array($_SESSION['user']['role'], ['USER', 'VENDOR'])): ?>
-    
-    <a href="?url=user/ViewForAllUser">Home</a>
-     <a href="?url=rent/myRequests">My Rent Requests</a>
-     <a href="?url=rent/ownerRequests">Incoming Requests</a>
-     <a href="?url=tool/create">Create Tool</a>
-    
-<?php endif; ?>
 
+                <!-- USER / VENDOR -->
+                <?php if (in_array($_SESSION['user']['role'], ['USER', 'VENDOR'])): ?>
+                    <a href="?url=user/ViewForAllUser">Home</a>
+                    <a href="?url=tool/myTools">My Tools</a>
+                    <a href="?url=rent/myRequests">My Rent Requests</a>
+                    <a href="?url=rent/ownerRequests">Incoming Requests</a>
+                    <a href="?url=tool/create">Create Tool</a>
+                <?php endif; ?>
 
-                <!-- Admin Menus -->
+                <!-- ADMIN -->
                 <?php if ($_SESSION['user']['role'] === 'ADMIN'): ?>
-                    <a href="?url=rent/adminRequests">
-            All Rent Requests
-        </a>
                     <a href="?url=user/ViewForAllUser">Home</a>
                     <a href="?url=admin/users">All Users</a>
                     <a href="?url=admin/vendors">All Vendors</a>
-                    <a href="?url=admin/manageAdmins">Manage Admin</a>
-                    <a href="?url=category/index">Manage Categories</a>
+                    <a href="?url=admin/manageAdmins">Manage Admins</a>
+                    <a href="?url=rent/adminRequests">All Rent Requests</a>
+                    <a href="?url=category/index">Categories</a>
                 <?php endif; ?>
 
-                <!-- User/Vendor/Admin Dropdown -->
+                <!-- Profile Dropdown -->
                 <div class="dropdown">
                     <button class="dropdown-btn">
                         <?= htmlspecialchars($_SESSION['user']['name']) ?> ⌄

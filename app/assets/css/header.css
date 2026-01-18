@@ -1,6 +1,7 @@
 /* =========================
    NAVBAR
    ========================= */
+
 .navbar {
     background: #0d6efd;
     padding: 14px 0;
@@ -8,31 +9,61 @@
 
 .nav-container {
     width: 90%;
-    max-width: 1100px;
+    max-width: 1200px;
     margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.nav-logo a {
-    color: #ffffff;
-    font-size: 22px;
-    font-weight: 600;
+/* =========================
+   LOGO
+   ========================= */
+
+.nav-logo .logo-text {
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
+    color: #ffffff;
 }
+
+.nav-logo .logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.logo-sub {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.9;
+    letter-spacing: 0.4px;
+}
+
+/* =========================
+   MENU LINKS
+   ========================= */
 
 .nav-menu {
     display: flex;
     align-items: center;
+    gap: 18px;
 }
 
 .nav-menu a {
-    margin-left: 18px;
     color: #ffffff;
     text-decoration: none;
     font-size: 14px;
+    font-weight: 500;
 }
+
+.nav-menu a:hover {
+    opacity: 0.9;
+}
+
+/* =========================
+   BUTTON
+   ========================= */
 
 .btn-primary {
     padding: 6px 14px;
@@ -42,10 +73,12 @@
     font-weight: 600;
 }
 
+/* =========================
+   DROPDOWN
+   ========================= */
 
 .dropdown {
     position: relative;
-    margin-left: 18px;
 }
 
 .dropdown-btn {
@@ -54,6 +87,7 @@
     color: #ffffff;
     font-size: 14px;
     cursor: pointer;
+    font-weight: 600;
 }
 
 .dropdown-menu {
@@ -66,7 +100,7 @@
     border-radius: 6px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.15);
     overflow: hidden;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .dropdown-menu a {
@@ -92,8 +126,25 @@
 }
 
 /* =========================
-   SHOW DROPDOWN
+   DROPDOWN SHOW
    ========================= */
+
 .dropdown.open .dropdown-menu {
     display: block;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .nav-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 }

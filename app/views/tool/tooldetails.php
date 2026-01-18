@@ -2,20 +2,10 @@
 require_once __DIR__ . '/../layouts/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Tool Details</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/tooldetails.css">
-</head>
-
-<body>
+<!-- CSS (ALL preserved) -->
+<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
+<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
+<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/tooldetails.css">
 
 <div class="tool-details">
 
@@ -26,8 +16,11 @@ require_once __DIR__ . '/../layouts/header.php';
 
     <hr>
 
-    <!-- Tool Images -->
+    <!-- =========================
+         Tool Images
+         ========================= -->
     <h4>Tool Images</h4>
+
     <div class="tool-images">
         <?php if (!empty($tool['images'])): ?>
             <?php foreach ($tool['images'] as $img): ?>
@@ -43,17 +36,34 @@ require_once __DIR__ . '/../layouts/header.php';
 
     <hr>
 
-    <!-- Tool Information -->
+    <!-- =========================
+         Tool Information
+         ========================= -->
     <h4>Tool Information</h4>
-    <p><strong>Price per day:</strong> <?= htmlspecialchars($tool['price_per_day']) ?></p>
-    <p><strong>Location:</strong> <?= htmlspecialchars($tool['location']) ?></p>
-    <p><strong>Quantity:</strong> <?= htmlspecialchars($tool['quantity']) ?></p>
-    <p><strong>Status:</strong> <?= htmlspecialchars($tool['status']) ?></p>
+
+    <p><strong>Price per day:</strong>
+        ৳ <?= htmlspecialchars($tool['price_per_day']) ?>
+    </p>
+
+    <p><strong>Location:</strong>
+        <?= htmlspecialchars($tool['location']) ?>
+    </p>
+
+    <p><strong>Quantity:</strong>
+        <?= htmlspecialchars($tool['quantity']) ?>
+    </p>
+
+    <p><strong>Status:</strong>
+        <?= htmlspecialchars($tool['status']) ?>
+    </p>
 
     <hr>
 
-    <!-- Owner Information -->
+    <!-- =========================
+         Owner Information
+         ========================= -->
     <h4>Owner Information</h4>
+
     <div class="owner-info">
 
         <?php if (!empty($tool['owner_image'])): ?>
@@ -64,14 +74,20 @@ require_once __DIR__ . '/../layouts/header.php';
             >
         <?php endif; ?>
 
-        <p><strong>Name:</strong> <?= htmlspecialchars($tool['owner_name']) ?></p>
+        <p><strong>Name:</strong>
+            <?= htmlspecialchars($tool['owner_name']) ?>
+        </p>
 
         <?php if (!empty($tool['owner_email'])): ?>
-            <p><strong>Email:</strong> <?= htmlspecialchars($tool['owner_email']) ?></p>
+            <p><strong>Email:</strong>
+                <?= htmlspecialchars($tool['owner_email']) ?>
+            </p>
         <?php endif; ?>
 
         <?php if (!empty($tool['owner_phone'])): ?>
-            <p><strong>Phone:</strong> <?= htmlspecialchars($tool['owner_phone']) ?></p>
+            <p><strong>Phone:</strong>
+                <?= htmlspecialchars($tool['owner_phone']) ?>
+            </p>
         <?php endif; ?>
 
         <?php if (!isset($_SESSION['user'])): ?>
@@ -82,58 +98,72 @@ require_once __DIR__ . '/../layouts/header.php';
 
     <hr>
 
-    <!-- Description -->
+    <!-- =========================
+         Description
+         ========================= -->
     <h4>Description</h4>
     <p><?= nl2br(htmlspecialchars($tool['description'])) ?></p>
 
     <hr>
 
-    <!-- Action -->
+    <!-- =========================
+         Action
+         ========================= -->
     <h4>Action</h4>
 
-<?php if (!isset($_SESSION['user'])): ?>
+    <?php if (!isset($_SESSION['user'])): ?>
 
-    <a href="?url=user/login">Login to Rent</a>
+        <a href="?url=user/login" class="rent-btn">
+            Login to Rent
+        </a>
 
-<?php elseif ($_SESSION['user']['role'] === 'ADMIN'): ?>
+    <?php elseif ($_SESSION['user']['role'] === 'ADMIN'): ?>
 
-    <p>Rent not allowed</p>
+        <p>Rent not allowed</p>
 
-<?php elseif ($tool['quantity'] <= 0): ?>
+    <?php elseif ($tool['quantity'] <= 0): ?>
 
-    <p>Out of stock</p>
+        <p>Out of stock</p>
 
-<?php elseif ($_SESSION['user']['id'] === $tool['user_id']): ?>
+    <?php elseif ($_SESSION['user']['id'] === $tool['user_id']): ?>
 
-    <p>You cannot rent your own tool</p>
+        <p>You cannot rent your own tool</p>
 
-<?php else: ?>
+    <?php else: ?>
 
-    <form action="?url=rent/request" method="POST">
-        <input type="hidden" name="tool_id" value="<?= htmlspecialchars($tool['id']) ?>">
+        <form action="?url=rent/request" method="POST">
 
-        <label>Start Date</label><br>
-        <input type="date" name="start_date" required><br><br>
+            <input type="hidden"
+                   name="tool_id"
+                   value="<?= htmlspecialchars($tool['id']) ?>">
 
-        <label>End Date</label><br>
-        <input type="date" name="end_date" required><br><br>
+            <label>Start Date</label><br>
+            <input type="date" name="start_date" required><br><br>
 
-        <label>Quantity</label><br>
-        <input type="number" name="quantity"
-               min="1"
-               max="<?= htmlspecialchars($tool['quantity']) ?>"
-               value="1" required><br><br>
+            <label>End Date</label><br>
+            <input type="date" name="end_date" required><br><br>
 
-        <button type="submit">Send Rent Request</button>
-    </form>
+            <label>Quantity</label><br>
+            <input type="number"
+                   name="quantity"
+                   min="1"
+                   max="<?= htmlspecialchars($tool['quantity']) ?>"
+                   value="1"
+                   required><br><br>
 
-<?php endif; ?>
+            <button type="submit">
+                Send Rent Request
+            </button>
 
+        </form>
 
+    <?php endif; ?>
 
     <hr>
 
-    <a href="?url=user/ViewForAllUser">← Back to tools</a>
+    <a href="?url=user/ViewForAllUser">
+        ← Back to tools
+    </a>
 
 </div>
 
@@ -142,6 +172,3 @@ require_once __DIR__ . '/../layouts/footer.php';
 ?>
 
 <script src="/tool_sharing_application/app/assets/js/header.js"></script>
-
-</body>
-</html>

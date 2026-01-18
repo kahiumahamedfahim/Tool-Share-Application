@@ -1,0 +1,148 @@
+/* =========================
+   Page Wrapper
+   ========================= */
+
+body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #f4f7fb;
+    color: #212529;
+}
+
+h2 {
+    text-align: center;
+    color: #0d6efd;
+    margin: 20px 0;
+}
+
+/* =========================
+   Rent Card
+   ========================= */
+
+.rent-card {
+    max-width: 900px;
+    margin: 18px auto;
+    background: #ffffff;
+    padding: 16px 18px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* =========================
+   Tool Image
+   ========================= */
+
+.rent-card img[alt="Tool Image"] {
+    width: 140px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    background: #e9ecef;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* =========================
+   Owner Image
+   ========================= */
+
+.rent-card img[alt="Owner Image"] {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid #dee2e6;
+    background: #e9ecef;
+    margin: 8px 0;
+    display: block;
+}
+
+/* =========================
+   Text Content
+   ========================= */
+
+.rent-card p {
+    margin: 6px 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.rent-card strong {
+    color: #495057;
+}
+
+/* =========================
+   Status
+   ========================= */
+
+.rent-card p strong + span {
+    font-weight: 600;
+}
+
+/* =========================
+   Action Links
+   ========================= */
+
+.rent-card a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Cancel */
+.rent-card a[href*="rent/cancel"] {
+    background: #dc3545;
+    color: #ffffff;
+}
+
+.rent-card a[href*="rent/cancel"]:hover {
+    background: #bb2d3b;
+}
+
+/* Request Return */
+.rent-card a[href*="rent/requestReturn"] {
+    background: #0d6efd;
+    color: #ffffff;
+}
+
+.rent-card a[href*="rent/requestReturn"]:hover {
+    background: #0b5ed7;
+}
+
+/* =========================
+   Divider
+   ========================= */
+
+.rent-card hr {
+    border: none;
+    border-top: 1px solid #dee2e6;
+    margin-top: 16px;
+}
+
+/* =========================
+   Empty State
+   ========================= */
+
+p:only-child {
+    text-align: center;
+    color: #6c757d;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 768px) {
+    .rent-card {
+        margin: 14px 10px;
+    }
+
+    .rent-card img[alt="Tool Image"] {
+        width: 100%;
+        height: 160px;
+    }
+}

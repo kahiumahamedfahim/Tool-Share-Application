@@ -8,10 +8,10 @@ body {
     color: #212529;
 }
 
-/* Page title */
+/* Title */
 h2 {
     text-align: center;
-    margin: 20px 0;
+    margin: 24px 0;
     color: #0d6efd;
 }
 
@@ -24,8 +24,8 @@ h2 {
     margin: 0 auto 40px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
-    padding: 0 15px;
+    gap: 22px;
+    padding: 0 16px;
 }
 
 /* =========================
@@ -34,47 +34,53 @@ h2 {
 
 .tool-card {
     background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.08);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all .25s ease;
 }
 
 .tool-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0,0,0,.15);
 }
 
-/* Tool image */
+/* Image */
 .tool-card img {
     width: 100%;
-    height: 180px;
+    height: 190px;
     object-fit: cover;
     background: #e9ecef;
 }
 
 /* =========================
-   Tool Content
+   Body
    ========================= */
 
 .tool-body {
-    padding: 14px 16px;
-    flex-grow: 1;
+    padding: 15px 16px;
+    flex: 1;
 }
 
 .tool-body h3 {
-    font-size: 16px;
+    font-size: 17px;
     margin-bottom: 6px;
-    color: #212529;
 }
 
 .tool-body .price {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     color: #0d6efd;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
+}
+
+.tool-body .description {
+    font-size: 14px;
+    color: #495057;
+    margin-bottom: 10px;
+    line-height: 1.5;
 }
 
 .tool-body .location,
@@ -85,41 +91,31 @@ h2 {
 }
 
 /* =========================
-   Card Footer / Action
+   Footer / Button
    ========================= */
 
 .tool-footer {
-    padding: 12px 16px;
+    padding: 14px 16px;
     border-top: 1px solid #e9ecef;
     text-align: center;
 }
 
-/* Action buttons */
-.tool-footer a,
-.tool-footer span {
+.tool-footer a {
     display: inline-block;
     width: 100%;
-    padding: 9px;
-    border-radius: 6px;
+    padding: 10px;
+    background: linear-gradient(135deg, #0d6efd, #0b5ed7);
+    color: #ffffff;
     font-size: 14px;
     font-weight: 600;
+    border-radius: 8px;
     text-decoration: none;
-}
-
-/* Rent button */
-.tool-footer a {
-    background: #0d6efd;
-    color: #ffffff;
+    transition: background .2s ease, transform .1s ease;
 }
 
 .tool-footer a:hover {
-    background: #0b5ed7;
-}
-
-/* Disabled / info text */
-.tool-footer span {
-    background: #e9ecef;
-    color: #6c757d;
+    background: linear-gradient(135deg, #0b5ed7, #084298);
+    transform: scale(1.02);
 }
 
 /* =========================
@@ -139,6 +135,6 @@ h2 {
 
 @media (max-width: 576px) {
     .tool-card img {
-        height: 150px;
+        height: 160px;
     }
 }

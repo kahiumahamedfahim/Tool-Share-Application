@@ -1,0 +1,130 @@
+/* =========================
+   My Uploaded Tools
+   ========================= */
+
+body {
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    background: #f4f7fb;
+    color: #212529;
+    margin: 0;
+    padding: 0;
+}
+
+/* Page title */
+h2 {
+    text-align: center;
+    margin: 24px 0;
+    color: #0d6efd;
+}
+
+/* Grid */
+.tools-grid {
+    max-width: 1100px;
+    margin: 0 auto 40px;
+    padding: 0 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+/* Card */
+.tool-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Image */
+.tool-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    background: #e9ecef;
+}
+
+.no-image {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e9ecef;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* Content */
+.tool-info {
+    padding: 14px 16px 16px;
+    flex: 1;
+}
+
+.tool-info h3 {
+    margin: 0 0 8px;
+    font-size: 18px;
+}
+
+.tool-info p {
+    margin: 4px 0;
+    font-size: 14.5px;
+    line-height: 1.5;
+}
+
+.tool-info strong {
+    color: #495057;
+}
+
+/* Locked message */
+.locked-msg {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: #fff3cd;
+    border: 1px solid #ffe69c;
+    color: #664d03;
+    border-radius: 6px;
+    font-size: 13.5px;
+}
+
+/* Actions */
+.actions {
+    margin-top: 10px;
+}
+
+.actions a {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.actions a:hover {
+    text-decoration: underline;
+}
+
+.disabled-btn {
+    color: #adb5bd;
+    cursor: not-allowed;
+    font-weight: 600;
+}
+
+/* Status badge (optional use) */
+.status-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    margin-left: 6px;
+}
+
+.status-AVAILABLE { background: #e7f1ff; color: #0d6efd; }
+.status-RENTED { background: #fde2e2; color: #dc3545; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tool-image,
+    .no-image {
+        height: 160px;
+    }
+}

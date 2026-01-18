@@ -284,6 +284,20 @@ public function getAllDetailedRequests(): array
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+public function hasActiveRentForTool(string $toolId): bool
+{
+    $sql = "
+        SELECT COUNT(*) 
+        FROM rent_requests
+        WHERE tool_id = ?
+          AND status IN ('ACCEPTED', 'RETURN_REQUESTED')
+    ";
+
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$toolId]);
+
+    return $stmt->fetchColumn() > 0;
+}
 
     
 }

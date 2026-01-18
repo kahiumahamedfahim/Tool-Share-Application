@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../repositories/ToolRepository.php';
 require_once __DIR__ . '/../repositories/CategoryRepository.php';
 require_once __DIR__ . '/../repositories/ToolImageRepository.php';
+require_once __DIR__ . '/../repositories/RentRepository.php';
 
 
 class ToolService
@@ -10,6 +11,7 @@ class ToolService
     private ToolRepository $toolRepo;
     private CategoryRepository $categoryRepo;
     private ToolImageRepository $toolImageRepo;
+    private RentRepository $rentRepo;
 
      /* =========================
         Constructor
@@ -20,6 +22,7 @@ class ToolService
         $this->toolRepo     = new ToolRepository();
         $this->categoryRepo = new CategoryRepository();
          $this->toolImageRepo = new ToolImageRepository();
+        $this->rentRepo     = new RentRepository();
 
     }
 
@@ -180,7 +183,143 @@ public function getToolDetails(string $toolId, ?array $currentUser): array
         'data' => $tool
     ];
 }
+/* =========================
+   Get My Tools (With Lock Status)
+   ========================= */
+public function getMyToolsWithLockStatus(array $currentUser): array
+{
+    if (empty($currentUser)) {
+        return [];
+    }
 
+    $tools = $this->toolRepo->getByUser($currentUser['id']);
+
+    foreach ($tools as &$tool) {
+        // check active rent
+        $isLocked = $this->rentRepo
+            ->hasActiveRentForTool($tool['id']);
+
+        $tool['is_locked'] = $isLocked;
+    }
+
+    return $tools;
+}
+/* =========================
+   Check If Tool Can Be Updated
+   ========================= */
+public function canUpdateTool(string $toolId, array $currentUser): bool
+{
+    $tool = $this->toolRepo->getById($toolId);
+
+    if (!$tool) {
+        return false;
+    }
+
+    // Only owner
+    if ($tool['user_id'] !== $currentUser['id']) {
+        return false;
+    }
+
+    // Locked?
+    return !$this->rentRepo->hasActiveRentForTool($toolId);
+}
+/* =========================
+   Check If Tool Can Be Deleted
+   ========================= */
+public function canDeleteTool(string $toolId, array $currentUser): bool
+{
+    // Same rule as update
+    return $this->canUpdateTool($toolId, $currentUser);
+}
+/* =========================
+   Delete Tool (Owner Only & Not Locked)
+   ========================= */
+public function deleteTool(string $toolId, array $currentUser): bool
+{
+    $tool = $this->toolRepo->getById($toolId);
+
+    if (!$tool) {
+        return false;
+    }
+
+    // Only owner can delete
+    if ($tool['user_id'] !== $currentUser['id']) {
+        return false;
+    }
+
+    // 🔒 Check active rent lock
+    if ($this->rentRepo->hasActiveRentForTool($toolId)) {
+        return false;
+    }
+
+    return $this->toolRepo->delete($toolId);
+}
+
+public function getToolByIdForEdit(string $toolId, array $currentUser): ?array
+{
+    $tool = $this->toolRepo->getById($toolId);
+
+    if (!$tool) {
+        return null;
+    }
+
+    if ($tool['user_id'] !== $currentUser['id']) {
+        return null;
+    }
+
+    return $tool;
+}
+public function updateTool(string $toolId, array $data, array $currentUser): array
+{
+    $tool = $this->toolRepo->getById($toolId);
+
+    if (!$tool) {
+        return ['success' => false, 'message' => 'Tool not found'];
+    }
+
+    if ($tool['user_id'] !== $currentUser['id']) {
+        return ['success' => false, 'message' => 'Unauthorized'];
+    }
+
+    if ($this->rentRepo->hasActiveRentForTool($toolId)) {
+        return ['success' => false, 'message' => 'Tool is currently rented'];
+    }
+
+    $required = ['name','price_per_day','quantity','location','description'];
+
+    foreach ($required as $field) {
+        if (empty($data[$field])) {
+            return ['success' => false, 'message' => "$field is required"];
+        }
+    }
+
+    return [
+        'success' => $this->toolRepo->update($toolId, [
+            'name' => $data['name'],
+            'price_per_day' => $data['price_per_day'],
+            'quantity' => $data['quantity'],
+            'location' => $data['location'],
+            'description' => $data['description'],
+        ]),
+        'message' => 'Tool updated successfully'
+    ];
+}
+public function getToolForEditWithImages(string $toolId, array $currentUser): ?array
+{
+    $tool = $this->toolRepo->getById($toolId);
+
+    if (!$tool || $tool['user_id'] !== $currentUser['id']) {
+        return null;
+    }
+
+    if ($this->rentRepo->hasActiveRentForTool($toolId)) {
+        return null;
+    }
+
+    $tool['images'] = $this->toolImageRepo->getByToolId($toolId);
+
+    return $tool;
+}
 
 
 }
