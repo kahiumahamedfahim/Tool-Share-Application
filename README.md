@@ -126,7 +126,7 @@ www/ (WAMP)
 ```
 ### 3️⃣ Import Database
 - Open **phpMyAdmin**
-- Create database: `tool_sharing`
+- Create database: `tool_share_application`
 - Import:
 ```text
 tool_sharing.sql
