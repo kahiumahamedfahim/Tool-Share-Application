@@ -8,10 +8,9 @@ require_once __DIR__ . '/../layouts/header.php';
     <meta charset="UTF-8">
     <title>All Vendors</title>
 
-    <!-- Vendor page CSS -->
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/vendors.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
+     <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/header.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/footer.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/vendors.css">
 </head>
 <body>
 
@@ -54,6 +53,6 @@ require_once __DIR__ . '/../layouts/header.php';
 <?php
 require_once __DIR__ . '/../layouts/footer.php';
 ?>
-<script src="/tool_sharing_application/app/assets/js/header.js"></script>
+<script src="/final/tool-share-application/app/assets/js/header.js"></script>
 </body>
 </html>

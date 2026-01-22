@@ -8,9 +8,9 @@ require_once __DIR__ . '/../layouts/header.php';
     <meta charset="UTF-8">
     <title>Create Tool</title>
 </head>
-  <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/toolcreate.css">
+  <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/header.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/footer.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/toolcreate.css">
 <body>
 
 <h2>Create Tool</h2>
@@ -39,18 +39,16 @@ require_once __DIR__ . '/../layouts/header.php';
 
     <br><br>
 
-    <!-- Description -->
     <label>Description</label><br>
     <textarea name="description" rows="4" required></textarea>
 
     <br><br>
-     <!-- Category -->
     <label>Category</label><br>
     <select name="category_id" required>
         <option value="">-- Select Category --</option>
 
         <?php
-        // Active categories needed
+       
         require_once __DIR__ . '/../../repositories/CategoryRepository.php';
         $catRepo = new CategoryRepository();
         $categories = $catRepo->getActive();
@@ -98,5 +96,5 @@ require_once __DIR__ . '/../layouts/footer.php';
 ?>
 
 </body>
-<script src="/tool_sharing_application/app/assets/js/header.js"></script>
+<script src="/final/tool-share-application/app/assets/js/header.js"></script>
 </html>

@@ -7,9 +7,10 @@ require_once __DIR__ . '/../layouts/header.php';
 <head>
     <meta charset="UTF-8">
     <title>Manage Admin</title>
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/manageadmin.css">
+         <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/header.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/footer.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/allvendorsview.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/manageadmin.css">
 </head>
 <body>
 
@@ -110,5 +111,5 @@ require_once __DIR__ . '/../layouts/footer.php';
 ?>
 
 </body>
-<script src="/tool_sharing_application/app/assets/js/header.js"></script>
+<script src="/final/tool-share-application/app/assets/js/header.js"></script>
 </html>

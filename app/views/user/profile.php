@@ -7,16 +7,18 @@ require_once __DIR__ . '/../layouts/header.php';
 <head>
     <meta charset="UTF-8">
     <title>My Profile</title>
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/profile.css">
+    <link rel="stylesheet" href="/final/Tool-Share-Application/app/assets/css/header.css">
+    <link rel="stylesheet" href="/final/Tool-Share-Application/app/assets/css/footer.css">
+    
+    
+    <link rel="stylesheet" href="/final/Tool-Share-Application/app/assets/css/profile.css">
 </head>
 <body>
 
 <div class="profile-container">
 
     <div class="profile-image">
-        <img src="<?= htmlspecialchars($profileImage) ?>"
+        <img src="<?= htmlspecialchars(string: $profileImage) ?>"
              width="<?= $imageSize['width'] ?>"
              height="<?= $imageSize['height'] ?>"
              alt="Profile Picture">
@@ -59,6 +61,6 @@ require_once __DIR__ . '/../layouts/header.php';
 <?php
 require_once __DIR__ . '/../layouts/footer.php';
 ?>
-<script src="/tool_sharing_application/app/assets/js/header.js"></script>
+<script src="/final/tool-share-application/app/assets/js/header.js"></script>
 </body>
 </html>

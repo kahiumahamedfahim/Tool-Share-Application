@@ -229,6 +229,8 @@ public function getRentWithTool(string $rentId): ?array
             rr.tool_id,
             rr.owner_id,
             rr.renter_id,
+            rr.start_date,
+            rr.end_date,
             rr.status
         FROM rent_requests rr
         WHERE rr.id = ?
@@ -239,9 +241,9 @@ public function getRentWithTool(string $rentId): ?array
     $stmt->execute([$rentId]);
 
     $rent = $stmt->fetch(PDO::FETCH_ASSOC);
-
     return $rent ?: null;
 }
+
 /* =========================
    Admin: Get All Rent Requests (UI Ready with Images)
    ========================= */

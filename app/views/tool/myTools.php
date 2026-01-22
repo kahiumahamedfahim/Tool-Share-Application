@@ -2,10 +2,9 @@
 require_once __DIR__ . '/../layouts/header.php';
 ?>
 
-<!-- Page specific CSS -->
- <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/myTools.css">
+ <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/header.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/footer.css">
+<link rel="stylesheet" href="/final/tool-share-application/app/assets/css/myTools.css">
 
 <h2>My Uploaded Tools</h2>
 
@@ -19,10 +18,10 @@ require_once __DIR__ . '/../layouts/header.php';
 
     <div class="tool-card">
 
-        <!-- Tool Image -->
+     
         <?php if (!empty($tool['image'])): ?>
             <img
-                src="/tool_sharing_application/public/<?= htmlspecialchars($tool['image']) ?>"
+                src="/final/Tool-Share-Application/public/<?= htmlspecialchars($tool['image']) ?>"
                 alt="Tool Image"
                 class="tool-image"
             >
@@ -57,7 +56,6 @@ require_once __DIR__ . '/../layouts/header.php';
                 </p>
             <?php endif; ?>
 
-            <!-- Actions -->
             <div class="actions">
                 <?php if (!$tool['is_locked']): ?>
                     <a href="?url=tool/edit&id=<?= htmlspecialchars($tool['id']) ?>">
@@ -83,7 +81,7 @@ require_once __DIR__ . '/../layouts/header.php';
 
 <?php endif; ?>
 
-<script src="/tool_sharing_application/app/assets/js/header.js"></script>
+<script src="/final/tool-share-application /app/assets/js/header.js"></script>
 
 <?php
 require_once __DIR__ . '/../layouts/footer.php';

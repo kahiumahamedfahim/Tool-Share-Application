@@ -7,9 +7,9 @@ require_once __DIR__ . '/../layouts/header.php';
 <head>
     <meta charset="UTF-8">
     <title>Update Profile</title>
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/update_profile.css">
+    <link rel="stylesheet" href="/final/Tool-Share-Application/app/assets/css/header.css">
+    <link rel="stylesheet" href="/final/Tool-Share-Application/app/assets/css/footer.css">
+    <link rel="stylesheet" href="/final/Tool-Share-Application/app/assets/css/update_profile.css">
 </head>
 <body>
 
@@ -99,7 +99,7 @@ require_once __DIR__ . '/../layouts/header.php';
 <?php
 require_once __DIR__ . '/../layouts/footer.php';
 ?>
-<script src="/tool_sharing_application/app/assets/js/header.js"></script>
+<script src="/final/Tool-Share-Application/app/assets/js/header.js"></script>
 
 </body>
 </html>

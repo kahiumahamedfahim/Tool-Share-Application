@@ -1,8 +1,8 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/rent.css">
+<link rel="stylesheet" href="/final/tool-share-application/app/assets/css/header.css">
+<link rel="stylesheet" href="/final/tool-share-application/app/assets/css/footer.css">
+<link rel="stylesheet" href="/final/tool-share-application/app/assets/css/rent.css">
 
 
 <div class="rent-page">
@@ -22,11 +22,11 @@
                 <!-- Tool Section -->
                 <div class="rent-tool">
                     <img
-                        src="/tool_sharing_application/public/<?= htmlspecialchars($req['tool_image'] ?? 'uploads/default-tool.png') ?>"
+                        src="/final/tool-share-application/public/<?= htmlspecialchars($req['tool_image'] ?? 'uploads/default-tool.png') ?>"
                         alt="Tool Image"
                         class="tool-image"
-                        width="48"
-    height="48"
+                        width="150"
+    height="150"
     style="
         width:100px;
         height:80px;
@@ -46,7 +46,7 @@
                 <!-- Renter Section -->
                 <div class="rent-user">
                    <img
-    src="/tool_sharing_application/public/<?= htmlspecialchars($req['renter_image'] ?? 'uploads/default-user.png') ?>"
+    src="/final/tool-share-application/public/<?= htmlspecialchars($req['renter_image'] ?? 'uploads/default-user.png') ?>"
     alt="Renter Image"
     width="48"
     height="48"
@@ -116,4 +116,4 @@
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
 
-<script src="/tool_sharing_application/app/assets/js/header.js"></script>
+<script src="/final/tool-share-application/app/assets/js/header.js"></script>

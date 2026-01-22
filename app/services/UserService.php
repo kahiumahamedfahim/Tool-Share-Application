@@ -69,9 +69,7 @@ if ($this->userRepo->isPhoneExists($data['phone']))
         'message' => 'Phone number already exists'
     ];
     }
-    /* =========================
-       STEP 5: Role based validation
-       ========================= */
+   
 
     if ($data['role'] === 'VENDOR') {
         if (empty($data['shop_number']) || empty($data['business_card_no'])) {
@@ -253,7 +251,7 @@ public function updateProfile(array $data, array $currentUser): array
     if (!$updated) {
         return [
             'success' => false,
-            'message' => 'No changes detected'
+           
         ];
     }
 
@@ -264,11 +262,12 @@ public function updateProfile(array $data, array $currentUser): array
 }
 public function updateProfileImage(string $userId, ?string $imagePath): void
 {
-    $this->userRepo->updateProfileImage($userId, $imagePath);
+   $this->userRepo->updateProfileImage($userId, $imagePath);
+   
 }
 public function changePassword(array $data, array $currentUser): array
 {
-    // 🔒 Self check
+   
     if ($data['id'] !== $currentUser['id']) {
         return [
             'success' => false,
@@ -276,7 +275,6 @@ public function changePassword(array $data, array $currentUser): array
         ];
     }
 
-    // 🔹 Required fields
     if (
         empty($data['old_password']) ||
         empty($data['new_password']) ||
@@ -288,7 +286,7 @@ public function changePassword(array $data, array $currentUser): array
         ];
     }
 
-    // 🔹 Confirm password
+
     if ($data['new_password'] !== $data['confirm_password']) {
         return [
             'success' => false,
@@ -296,7 +294,6 @@ public function changePassword(array $data, array $currentUser): array
         ];
     }
 
-    // 🔹 Strength check
     if (strlen($data['new_password']) < 6) {
         return [
             'success' => false,
@@ -304,7 +301,7 @@ public function changePassword(array $data, array $currentUser): array
         ];
     }
 
-    // 🔹 Get current hashed password
+   
     $oldHashedPassword = $this->userRepo->getUserPasswordById($data['id']);
 
     if (!$oldHashedPassword || !password_verify($data['old_password'], $oldHashedPassword)) {

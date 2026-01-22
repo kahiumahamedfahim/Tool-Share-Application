@@ -3,9 +3,9 @@ require_once __DIR__ . '/../layouts/header.php';
 ?>
 
 <!-- CSS (ALL preserved) -->
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/tooldetails.css">
+<link rel="stylesheet" href="/final/tool-share-application/app/assets/css/header.css">
+<link rel="stylesheet" href="/final/tool-share-application/app/assets/css/footer.css">
+<link rel="stylesheet" href="/final/tool-share-application/app/assets/css/tooldetails.css">
 
 <div class="tool-details">
 
@@ -25,7 +25,7 @@ require_once __DIR__ . '/../layouts/header.php';
         <?php if (!empty($tool['images'])): ?>
             <?php foreach ($tool['images'] as $img): ?>
                 <img
-                    src="/tool_sharing_application/public/<?= htmlspecialchars($img) ?>"
+                    src="/final/Tool-Share-Application/public/<?= htmlspecialchars($img) ?>"
                     alt="Tool Image"
                 >
             <?php endforeach; ?>
@@ -68,7 +68,7 @@ require_once __DIR__ . '/../layouts/header.php';
 
         <?php if (!empty($tool['owner_image'])): ?>
             <img
-                src="/tool_sharing_application/public/<?= htmlspecialchars($tool['owner_image']) ?>"
+                src="/final/Tool-Share-Application/public/<?= htmlspecialchars($tool['owner_image']) ?>"
                 class="owner-image"
                 alt="Owner Image"
             >
@@ -118,6 +118,10 @@ require_once __DIR__ . '/../layouts/header.php';
         </a>
 
     <?php elseif ($_SESSION['user']['role'] === 'ADMIN'): ?>
+
+        <p>Rent not allowed</p>
+
+    <?php elseif ($_SESSION['user']['role'] === 'VENDOR'): ?>
 
         <p>Rent not allowed</p>
 
@@ -171,4 +175,4 @@ require_once __DIR__ . '/../layouts/header.php';
 require_once __DIR__ . '/../layouts/footer.php';
 ?>
 
-<script src="/tool_sharing_application/app/assets/js/header.js"></script>
+<script src="/final/tool-share-application/app/assets/js/header.js"></script>

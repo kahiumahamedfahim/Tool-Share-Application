@@ -1,9 +1,9 @@
 <?php 
 require_once __DIR__ . '/../layouts/header.php';
 ?>
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/myrentRequset.css">
+<link rel="stylesheet" href="/final/tool-share-application/app/assets/css/header.css">
+<link rel="stylesheet" href="/final/tool-share-application/app/assets/css/footer.css">
+<link rel="stylesheet" href="/final/tool-share-application/app/assets/css/myrentRequset.css">
 <h2>My Rent Requests</h2>
 
 <?php if (empty($requests)): ?>
@@ -17,7 +17,7 @@ require_once __DIR__ . '/../layouts/header.php';
         <!-- Tool Image -->
         <?php if (!empty($req['tool_image'])): ?>
             <img
-                src="/tool_sharing_application/public/<?= htmlspecialchars($req['tool_image']) ?>"
+                src="/final/tool-share-application/public/<?= htmlspecialchars($req['tool_image']) ?>"
                 alt="Tool Image"
                 width="140"
             >
@@ -30,7 +30,7 @@ require_once __DIR__ . '/../layouts/header.php';
 
         <?php if (!empty($req['owner_image'])): ?>
             <img
-                src="/tool_sharing_application/public/<?= htmlspecialchars($req['owner_image']) ?>"
+                src="/final/tool-share-application/public/<?= htmlspecialchars($req['owner_image']) ?>"
                 alt="Owner Image"
                 width="80"
             >
@@ -72,4 +72,4 @@ require_once __DIR__ . '/../layouts/header.php';
 <?php 
 require_once __DIR__ . '/../layouts/footer.php';
 ?>
-<script src="/tool_sharing_application/app/assets/js/header.js"></script>
+<script src="/final/tool-share-application/app/assets/js/header.js"></script>

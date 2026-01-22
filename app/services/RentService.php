@@ -2,34 +2,33 @@
 
 require_once __DIR__ . '/../repositories/RentRepository.php';
 require_once __DIR__ . '/../repositories/ToolRepository.php';
+require_once __DIR__ . '/../repositories/RentalLogRepository.php';
+
 
 class RentService
 {
     private RentRepository $rentRepo;
     private ToolRepository $toolRepo;
-
+    private RentalLogRepository $logRepo;
     public function __construct()
     {
         $this->rentRepo = new RentRepository();
         $this->toolRepo = new ToolRepository();
+        $this->logRepo = new RentalLogRepository();
     }
 
-    /* =========================
-       Create Rent Request(s)
-       ========================= */
     public function createRequest(array $data, array $currentUser): array
     {
-        // 🔒 Auth check
+       
         if (empty($currentUser)) {
             return ['success' => false, 'message' => 'Login required'];
         }
 
-        // ❌ Admin cannot rent
         if ($currentUser['role'] === 'ADMIN') {
             return ['success' => false, 'message' => 'Admin cannot rent tools'];
         }
 
-        // 🔹 Required fields
+    
         $required = ['tool_id', 'start_date', 'end_date', 'quantity'];
 
         foreach ($required as $field) {
@@ -41,29 +40,27 @@ class RentService
             }
         }
 
-        // 🔹 Date validation
         if (strtotime($data['start_date']) > strtotime($data['end_date'])) {
             return ['success' => false, 'message' => 'Invalid rent date range'];
         }
 
-        // 🔹 Tool check
+       
         $tool = $this->toolRepo->getById($data['tool_id']);
 
         if (!$tool) {
             return ['success' => false, 'message' => 'Tool not found'];
         }
 
-        // ❌ Owner cannot rent own tool
+  
         if ($tool['user_id'] === $currentUser['id']) {
             return ['success' => false, 'message' => 'You cannot rent your own tool'];
         }
 
-        // ❌ Tool unavailable
+   
         if ($tool['status'] !== 'AVAILABLE' || $tool['quantity'] <= 0) {
             return ['success' => false, 'message' => 'Tool not available'];
         }
 
-        // 🔹 Quantity rules
         $requestedQty = (int)$data['quantity'];
 
         if ($requestedQty < 1) {
@@ -74,7 +71,6 @@ class RentService
             return ['success' => false, 'message' => 'Requested quantity exceeds availability'];
         }
 
-        // 🔹 Duplicate pending check (per unit logic)
         if ($this->rentRepo->hasPendingRequest($tool['id'], $currentUser['id'])) {
             return [
                 'success' => false,
@@ -82,9 +78,6 @@ class RentService
             ];
         }
 
-        // =========================
-        // Create requests (1 unit per row)
-        // =========================
         for ($i = 1; $i <= $requestedQty; $i++) {
 
             $rent = [
@@ -106,9 +99,7 @@ class RentService
         ];
     }
 
-    /* =========================
-       Owner Accept Request
-       ========================= */
+
     public function acceptRequest(string $rentId, array $currentUser): array
     {
         $rent = $this->rentRepo->getById($rentId);
@@ -117,17 +108,15 @@ class RentService
             return ['success' => false, 'message' => 'Request not found'];
         }
 
-        // 🔒 Only owner
         if ($rent['owner_id'] !== $currentUser['id']) {
             return ['success' => false, 'message' => 'Unauthorized'];
         }
 
-        // 🔹 Status check
+      
         if ($rent['status'] !== 'REQUESTED') {
             return ['success' => false, 'message' => 'Invalid request state'];
         }
 
-        // 🔹 Tool availability
         $tool = $this->toolRepo->getById($rent['tool_id']);
 
         if ($tool['quantity'] <= 0) {
@@ -137,7 +126,6 @@ class RentService
         // 🔹 Update status
         $this->rentRepo->updateStatus($rentId, 'ACCEPTED');
 
-        // 🔹 Reduce quantity
         $this->toolRepo->updateQuantity(
             $tool['id'],
             $tool['quantity'] - 1
@@ -146,9 +134,7 @@ class RentService
         return ['success' => true, 'message' => 'Request accepted'];
     }
 
-    /* =========================
-       Owner Reject Request
-       ========================= */
+   
     public function rejectRequest(string $rentId, array $currentUser): array
     {
         $rent = $this->rentRepo->getById($rentId);
@@ -170,9 +156,6 @@ class RentService
         return ['success' => true, 'message' => 'Request rejected'];
     }
 
-    /* =========================
-       User Cancel Request
-       ========================= */
     public function cancelRequest(string $rentId, array $currentUser): array
     {
         $rent = $this->rentRepo->getById($rentId);
@@ -201,23 +184,18 @@ public function getRequestsForRenter(string $renterId): array
 {
     return $this->rentRepo->getByRenter($renterId);
 }
-/* =========================
-   Get My Rent Requests (User)
-   ========================= */
+
 public function getMyRentRequests(string $renterId): array
 {
-    // No business rule here
-    // Just delegate to repository
+    
     return $this->rentRepo->getDetailedRequestsByRenter($renterId);
 }
 public function getIncomingRequestsForOwner(string $ownerId): array
 {
-    // Thin service: no logic, just delegate
+   
     return $this->rentRepo->getDetailedRequestsByOwner($ownerId);
 }
-/* =========================
-   Renter: Request Tool Return
-   ========================= */
+
 public function requestReturn(string $rentId, array $currentUser): array
 {
     if (empty($currentUser)) {
@@ -230,12 +208,11 @@ public function requestReturn(string $rentId, array $currentUser): array
         return ['success' => false, 'message' => 'Rent not found'];
     }
 
-    // 🔒 Only renter can request return
+ 
     if ($rent['renter_id'] !== $currentUser['id']) {
         return ['success' => false, 'message' => 'Unauthorized'];
     }
 
-    // 🔹 Only ACCEPTED can be returned
     if ($rent['status'] !== 'ACCEPTED') {
         return ['success' => false, 'message' => 'Return not allowed'];
     }
@@ -247,9 +224,6 @@ public function requestReturn(string $rentId, array $currentUser): array
         'message' => 'Return request sent to owner'
     ];
 }
-/* =========================
-   Owner: Confirm Tool Return
-   ========================= */
 public function confirmReturn(string $rentId, array $currentUser): array
 {
     if (empty($currentUser)) {
@@ -262,20 +236,19 @@ public function confirmReturn(string $rentId, array $currentUser): array
         return ['success' => false, 'message' => 'Rent not found'];
     }
 
-    // 🔒 Only owner can confirm
+   
     if ($rent['owner_id'] !== $currentUser['id']) {
         return ['success' => false, 'message' => 'Unauthorized'];
     }
 
-    // 🔹 Only RETURN_REQUESTED can be confirmed
     if ($rent['status'] !== 'RETURN_REQUESTED') {
         return ['success' => false, 'message' => 'Invalid return state'];
     }
 
-    // 🔹 Update status
+   
     $this->rentRepo->updateStatus($rentId, 'RETURNED');
 
-    // 🔹 Increase tool quantity
+  
     $tool = $this->toolRepo->getById($rent['tool_id']);
 
     $this->toolRepo->updateQuantity(
@@ -283,18 +256,37 @@ public function confirmReturn(string $rentId, array $currentUser): array
         $tool['quantity'] + 1
     );
 
+
+    // Rent duration (days)
+    $rentDays = (
+        strtotime($rent['end_date']) -
+        strtotime($rent['start_date'])
+    ) / (60 * 60 * 24) + 1;
+
+    $totalAmount = $rentDays * $tool['price_per_day'];
+
+    $this->logRepo->create([
+        'id'            => uniqid('log_'),
+        'rent_id'       => $rent['id'],
+        'tool_id'       => $rent['tool_id'],
+        'owner_id'      => $rent['owner_id'],
+        'renter_id'     => $rent['renter_id'],
+        'rent_start'    => $rent['start_date'],
+        'rent_end'      => $rent['end_date'],
+        'return_date'   => date('Y-m-d'),
+        'total_amount'  => $totalAmount
+    ]);
+
     return [
         'success' => true,
         'message' => 'Tool returned successfully'
     ];
 }
-/* =========================
-   Admin: Get All Rent Requests
-   ========================= */
+
+
 public function getAllRentRequestsForAdmin(): array
 {
-    // Admin is read-only here
-    // Just delegate to repository
+    
     return $this->rentRepo->getAllDetailedRequests();
 }
 

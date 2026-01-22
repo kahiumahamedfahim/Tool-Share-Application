@@ -7,50 +7,47 @@ require_once __DIR__ . '/../layouts/header.php';
 <head>
     <meta charset="UTF-8">
     <title>Change Password</title>
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/changepassword.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/header.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/footer.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/changepassword.css">
 </head>
 <body>
 
-<h2>Change Password</h2>
+<div class="change-password-container">
 
-<?php if (!empty($error)): ?>
-    <p>
-        <?= htmlspecialchars($error) ?>
-    </p>
-<?php endif; ?>
+    <h2>Change Password</h2>
 
-<form method="POST">
+    <?php if (!empty($error)): ?>
+        <p><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
 
-    <div>
-        <label>Current Password</label><br>
-        <input type="password" name="old_password" required>
-    </div>
+    <form method="POST">
 
-    <br>
+        <div>
+            <label>Current Password</label>
+            <input type="password" name="old_password" required>
+        </div>
 
-    <div>
-        <label>New Password</label><br>
-        <input type="password" name="new_password" required>
-    </div>
+        <div>
+            <label>New Password</label>
+            <input type="password" name="new_password" required>
+        </div>
 
-    <br>
+        <div>
+            <label>Confirm New Password</label>
+            <input type="password" name="confirm_password" required>
+        </div>
 
-    <div>
-        <label>Confirm New Password</label><br>
-        <input type="password" name="confirm_password" required>
-    </div>
+        <button type="submit">Change Password</button>
 
-    <br>
+    </form>
 
-    <button type="submit">Change Password</button>
+</div>
 
-</form>
+<script src="/final/tool-share-application/app/assets/js/header.js"></script>
 
 <?php
 require_once __DIR__ . '/../layouts/footer.php';
 ?>
-<script src="/tool_sharing_application/app/assets/js/header.js"></script>
 </body>
 </html>

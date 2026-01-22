@@ -13,9 +13,7 @@ class ToolService
     private ToolImageRepository $toolImageRepo;
     private RentRepository $rentRepo;
 
-     /* =========================
-        Constructor
-        ========================= */
+   
 
     public function __construct()
     {
@@ -26,12 +24,9 @@ class ToolService
 
     }
 
-    /* =========================
-       Create Tool
-       ========================= */
     public function createTool(array $data, array $currentUser): array
     {
-        // 🔒 Auth check
+        
         if (empty($currentUser)) {
             return [
                 'success' => false,
@@ -39,7 +34,7 @@ class ToolService
             ];
         }
 
-        // 🔹 Required fields
+    
         $required = [
             'category_id',
             'name',
@@ -58,15 +53,19 @@ class ToolService
             }
         }
 
-        // 🔹 Price validation
+
         if ($data['price_per_day'] <= 0) {
             return [
                 'success' => false,
                 'message' => 'Price per day must be greater than zero'
             ];
         }
-
-        // 🔹 Category must be ACTIVE
+        if ($data['quantity'] <= 0 || !is_numeric($data['quantity'])) {
+            return [
+                'success' => false,
+                'message' => 'Quantity must be a positive number'
+            ];
+        }
         $activeCategories = $this->categoryRepo->getActive();
         $categoryIds = array_column($activeCategories, 'id');
 
@@ -77,7 +76,6 @@ class ToolService
             ];
         }
 
-        // 🔹 Quantity rule by role
         if ($currentUser['role'] === 'USER' && $data['quantity'] != 1) {
             return [
                 'success' => false,
@@ -92,7 +90,7 @@ class ToolService
             ];
         }
 
-        // 🔹 Image count (paths provided by controller)
+    
         if (empty($data['images']) || count($data['images']) < 1) {
             return [
                 'success' => false,
@@ -100,7 +98,7 @@ class ToolService
             ];
         }
 
-        // 🔹 Prepare tool data
+      
         $tool = [
             'id'            => uniqid('tool_', true),
             'user_id'       => $currentUser['id'],
@@ -113,7 +111,7 @@ class ToolService
             'status'        => 'AVAILABLE'
         ];
 
-        // 🔹 Save tool
+    
         $created = $this->toolRepo->create($tool);
 
         if (!$created) {
@@ -136,22 +134,18 @@ class ToolService
             'message' => 'Tool created successfully'
         ];
     }
-    /* =========================
-   Get Tools For Home Page
-   ========================= */
+    
 public function getToolsForHome(?array $currentUser): array
 {
-    // Guest user
+   
     if (empty($currentUser)) {
         return $this->toolRepo->getAllAvailable();
     }
 
-    // Admin sees all tools
     if ($currentUser['role'] === 'ADMIN') {
         return $this->toolRepo->getAllAvailable();
     }
 
-    // User / Vendor → exclude own tools
     return $this->toolRepo->getAllAvailableExceptUser($currentUser['id']);
 }
 public function getToolDetails(string $toolId, ?array $currentUser): array
@@ -165,11 +159,8 @@ public function getToolDetails(string $toolId, ?array $currentUser): array
         ];
     }
 
-    // Attach images
     $tool['images'] = $this->toolRepo->getImagesByToolId($toolId);
 
-    // 🔒 Guest restriction:
-    // Guest can see owner NAME only
     if (empty($currentUser)) {
         unset(
             $tool['owner_email'],
@@ -183,9 +174,7 @@ public function getToolDetails(string $toolId, ?array $currentUser): array
         'data' => $tool
     ];
 }
-/* =========================
-   Get My Tools (With Lock Status)
-   ========================= */
+
 public function getMyToolsWithLockStatus(array $currentUser): array
 {
     if (empty($currentUser)) {
@@ -195,7 +184,7 @@ public function getMyToolsWithLockStatus(array $currentUser): array
     $tools = $this->toolRepo->getByUser($currentUser['id']);
 
     foreach ($tools as &$tool) {
-        // check active rent
+       
         $isLocked = $this->rentRepo
             ->hasActiveRentForTool($tool['id']);
 
@@ -204,9 +193,7 @@ public function getMyToolsWithLockStatus(array $currentUser): array
 
     return $tools;
 }
-/* =========================
-   Check If Tool Can Be Updated
-   ========================= */
+
 public function canUpdateTool(string $toolId, array $currentUser): bool
 {
     $tool = $this->toolRepo->getById($toolId);
@@ -215,25 +202,20 @@ public function canUpdateTool(string $toolId, array $currentUser): bool
         return false;
     }
 
-    // Only owner
+
     if ($tool['user_id'] !== $currentUser['id']) {
         return false;
     }
 
-    // Locked?
     return !$this->rentRepo->hasActiveRentForTool($toolId);
 }
-/* =========================
-   Check If Tool Can Be Deleted
-   ========================= */
+
 public function canDeleteTool(string $toolId, array $currentUser): bool
 {
     // Same rule as update
     return $this->canUpdateTool($toolId, $currentUser);
 }
-/* =========================
-   Delete Tool (Owner Only & Not Locked)
-   ========================= */
+
 public function deleteTool(string $toolId, array $currentUser): bool
 {
     $tool = $this->toolRepo->getById($toolId);
@@ -242,12 +224,10 @@ public function deleteTool(string $toolId, array $currentUser): bool
         return false;
     }
 
-    // Only owner can delete
     if ($tool['user_id'] !== $currentUser['id']) {
         return false;
     }
 
-    // 🔒 Check active rent lock
     if ($this->rentRepo->hasActiveRentForTool($toolId)) {
         return false;
     }
@@ -321,5 +301,19 @@ public function getToolForEditWithImages(string $toolId, array $currentUser): ?a
     return $tool;
 }
 
+  public function getImagesByToolId( $toolId): array
+    {
+        return $this->toolImageRepo->getByToolId($toolId);
+    }
+
+    public function deleteImagesByToolId( $toolId): void
+    {
+        $this->toolImageRepo->deleteByToolId($toolId);
+    }
+
+    public function addToolImage( $toolId, string $imagePath): void
+    {
+        $this->toolImageRepo->insert($toolId, $imagePath);
+    }
 
 }

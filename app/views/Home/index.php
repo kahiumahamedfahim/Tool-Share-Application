@@ -2,9 +2,9 @@
 require_once __DIR__ . '/../layouts/header.php';
 ?>
 
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/toolhomeindex.css">
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
+ <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/header.css"> 
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/footer.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/toolhomeindex.css">
 
 <h2>Tools</h2>
 
@@ -21,12 +21,12 @@ require_once __DIR__ . '/../layouts/header.php';
         <!-- Image -->
         <?php if (!empty($tool['image'])): ?>
             <img
-                src="/tool_sharing_application/public/<?= htmlspecialchars($tool['image']) ?>"
+                src="/final/Tool-Share-Application/public/<?= htmlspecialchars($tool['image']) ?>"
                 alt="Tool Image"
             >
         <?php else: ?>
             <img
-                src="/tool_sharing_application/public/uploads/no-image.png"
+                src="/final/Tool-Share-Application/public/uploads/no-image.png"
                 alt="No Image"
             >
         <?php endif; ?>
@@ -75,4 +75,4 @@ require_once __DIR__ . '/../layouts/header.php';
 require_once __DIR__ . '/../layouts/footer.php';
 ?>
 
-<script src="/tool_sharing_application/app/assets/js/header.js"></script>
+<script src="/final/tool-share-application/app/assets/js/header.js"></script>

@@ -11,9 +11,7 @@ class ToolRepository
         $this->db = Database::connect();
     }
 
-    /* =========================
-       Create Tool
-       ========================= */
+ 
     public function create(array $data): bool
     {
         $sql = "INSERT INTO tools (
@@ -55,10 +53,7 @@ class ToolRepository
         ]);
     }
 
-    /* =========================
-       Get Tool By ID
-       ========================= */
-   
+
 
     public function getByUser(string $userId): array
 {

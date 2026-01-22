@@ -1,16 +1,24 @@
+<?php
+require_once __DIR__ . '/../layouts/header.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="\tool_sharing_application\app\assets\css\login.css">
+    <link rel="stylesheet" href="/final/Tool-Share-Application/app/assets/css/login.css">
+    <link rel="stylesheet" href="/final/Tool-Share-Application/app/assets/css/header.css">
+    <link rel="stylesheet" href="/final/Tool-Share-Application/app/assets/css/footer.css">
+    
+    
+
 </head>
 <body>
 
 <div class="container">
     <h2>Login</h2>
 
-    <form action="/tool_sharing_application/public/?url=user/login"
+    <form action="?url=user/login"
           method="POST">
 
         <!-- Email or Phone -->
@@ -42,6 +50,6 @@
     </form>
 </div>
 
-<script src="\tool_sharing_application\app\assets\js\login.js"></script>
+<script src="/final/Tool-Share-Application/app/assets/js/login.js"></script>
 </body>
 </html>

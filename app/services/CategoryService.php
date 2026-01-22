@@ -31,7 +31,7 @@ class CategoryService
         ];
     }
 
-    // 🔹 Duplicate check (now case-safe)
+    
     if ($this->categoryRepo->findByName($name)) {
         return [
             'success' => false,
@@ -75,9 +75,7 @@ class CategoryService
         return $this->categoryRepo->getActive();
     }
 
-    /* =========================
-       Update Category Status
-       ========================= */
+   
     public function updateCategoryStatus(string $id, string $status, array $currentUser): array
     {
         // 🔒 Admin only
@@ -109,9 +107,7 @@ class CategoryService
             'message' => 'Category status updated'
         ];
     }
-    /* =========================
-   Delete Category (Admin)
-   ========================= */
+  
 public function deleteCategory(string $id, array $currentUser): array
 {
     // 🔒 Admin only

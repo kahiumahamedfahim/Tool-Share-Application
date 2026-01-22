@@ -1,0 +1,115 @@
+/* =========================
+   RENTAL LOG PAGE
+   ========================= */
+
+.rent-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   TABLE HEADER
+   ========================= */
+
+.rent-table thead {
+    background: #0d6efd;
+}
+
+.rent-table thead th {
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 12px 10px;
+    text-align: left;
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.rent-table thead th:last-child {
+    border-right: none;
+}
+
+/* =========================
+   TABLE BODY
+   ========================= */
+
+.rent-table tbody td {
+    font-size: 13px;
+    padding: 11px 10px;
+    border-bottom: 1px solid #e9ecef;
+    color: #212529;
+}
+
+.rent-table tbody tr:hover {
+    background: #f1f5ff;
+}
+
+/* =========================
+   EMPTY ROW
+   ========================= */
+
+.rent-table tbody td[colspan] {
+    text-align: center;
+    color: #6c757d;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* =========================
+   BUTTON (MATCH NAVBAR)
+   ========================= */
+
+.btn-primary {
+    display: inline-block;
+    padding: 6px 14px;
+    background: #0d6efd;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #0b5ed7;
+    color: #ffffff;
+}
+
+/* =========================
+   SEARCH FORM (ADMIN)
+   ========================= */
+
+.search-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+
+.search-form input {
+    padding: 7px 10px;
+    font-size: 13px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.search-form input:focus {
+    outline: none;
+    border-color: #0d6efd;
+}
+
+/* =========================
+   PAGE TITLE
+   ========================= */
+
+h2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #0d6efd;
+    font-weight: 700;
+}

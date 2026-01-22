@@ -24,9 +24,7 @@ class CategoryRepository
         ]);
     }
 
-    /* =========================
-       Get All Categories
-       ========================= */
+
     public function getAll(): array
     {
         $stmt = $this->db->query(
@@ -38,9 +36,6 @@ class CategoryRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /* =========================
-       Get Only Active Categories
-       ========================= */
     public function getActive(): array
     {
         $stmt = $this->db->prepare(
@@ -54,9 +49,7 @@ class CategoryRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /* =========================
-       Find Category by Name
-       ========================= */
+
     public function findByName(string $name): ?array
     {
         $stmt = $this->db->prepare(
@@ -68,9 +61,6 @@ class CategoryRepository
         return $row ?: null;
     }
 
-    /* =========================
-       Update Status (ACTIVE / INACTIVE)
-       ========================= */
     public function updateStatus(string $id, string $status): bool
     {
         $stmt = $this->db->prepare(
@@ -81,9 +71,7 @@ class CategoryRepository
         return $stmt->rowCount() > 0;
     }
 
-    /* =========================
-       Delete Category (Hard delete)
-       ========================= */
+  
     public function delete(string $id): bool
     {
         $stmt = $this->db->prepare(

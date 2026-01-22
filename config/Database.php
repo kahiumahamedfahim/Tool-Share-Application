@@ -3,7 +3,7 @@
 class Database
 {
     private static $host = "localhost";
-    private static $db   = "tool_sharing";
+    private static $db   = "tool share application";
     private static $user = "root";
     private static $pass = "";
 

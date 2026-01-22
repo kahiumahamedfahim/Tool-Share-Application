@@ -10,11 +10,11 @@ require_once __DIR__ . '/../layouts/header.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-     <<title>Dashboard</title>
+     <title>Dashboard</title>
 
- <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/allviewforuser.css">
+ <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/header.css"> 
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/footer.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/allviewforuser.css">
 </head>
 <body>
     <?php require_once __DIR__ . '/../layouts/header.php'; ?>

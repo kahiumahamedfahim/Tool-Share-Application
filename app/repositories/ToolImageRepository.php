@@ -11,9 +11,7 @@ class ToolImageRepository
         $this->db = Database::connect();
     }
 
-    /* =========================
-       Save Tool Image
-       ========================= */
+  
     public function add(string $id, string $toolId, string $imagePath): bool
     {
         $sql = "INSERT INTO tool_images (
@@ -35,9 +33,7 @@ class ToolImageRepository
         ]);
     }
 
-    /* =========================
-       Get Images by Tool
-       ========================= */
+ 
     public function getByToolId(string $toolId): array
     {
         $stmt = $this->db->prepare(
@@ -58,7 +54,25 @@ class ToolImageRepository
 
     return $stmt->rowCount() > 0;
 }
+ public function deleteByToolId( $toolId): void
+    {
+        $stmt = $this->db->prepare(
+            "DELETE FROM tool_images WHERE tool_id = :tool_id"
+        );
+        $stmt->execute(['tool_id' => $toolId]);
+    }public function insert($toolId, string $imagePath): void
+{
+    $stmt = $this->db->prepare(
+        "INSERT INTO tool_images (id, tool_id, image_path)
+         VALUES (:id, :tool_id, :image_path)"
+    );
 
+    $stmt->execute([
+        'id'         => uniqid('img_', true), // 👈 manually generate
+        'tool_id'    => $toolId,
+        'image_path' => $imagePath
+    ]);
+}
 
 
 }

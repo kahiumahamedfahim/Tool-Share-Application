@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . '/../layouts/header.php';
 ?>
- <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/header.css">
-    <link rel="stylesheet" href="/tool_sharing_application/app/assets/css/footer.css">
-<link rel="stylesheet" href="/tool_sharing_application/app/assets/css/myTools.css">
+ <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/header.css">
+    <link rel="stylesheet" href="/final/tool-share-application/app/assets/css/footer.css">
+<link rel="stylesheet" href="/final/tool-share-application/app/assets/css/myTools.css">
 
 <h2>Edit Tool</h2>
 
@@ -15,16 +15,14 @@ require_once __DIR__ . '/../layouts/header.php';
 
         <div class="tool-info">
 
-            <!-- =========================
-                 Current Images
-                 ========================= -->
+           
             <h4>Current Images</h4>
 
             <?php if (!empty($tool['images'])): ?>
                 <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px;">
                     <?php foreach ($tool['images'] as $img): ?>
                         <img
-                            src="/tool_sharing_application/public/<?= htmlspecialchars($img['image_path']) ?>"
+                            src="/final/Tool-Share-Application/public/<?= htmlspecialchars($img['image_path']) ?>"
                             alt="Tool Image"
                             style="width:120px;height:90px;object-fit:cover;border-radius:6px;border:1px solid #dee2e6;"
                         >
@@ -34,9 +32,6 @@ require_once __DIR__ . '/../layouts/header.php';
                 <p>No images uploaded</p>
             <?php endif; ?>
 
-            <!-- =========================
-                 Upload New Images
-                 ========================= -->
             <label>Change Images (optional)</label><br>
             <input type="file" name="images[]" multiple accept="image/*">
             <p style="font-size:13px;color:#6c757d;">
@@ -45,9 +40,6 @@ require_once __DIR__ . '/../layouts/header.php';
 
             <hr>
 
-            <!-- =========================
-                 Tool Fields
-                 ========================= -->
             <label>Tool Name</label><br>
             <input type="text"
                    name="name"
@@ -89,7 +81,7 @@ require_once __DIR__ . '/../layouts/header.php';
     </form>
 
 </div>
-<script src="/tool_sharing_application/app/assets/js/header.js"></script>
+<script src="/final/tool-share-application/app/assets/js/header.js"></script>
 <?php
 require_once __DIR__ . '/../layouts/footer.php';
 ?>
