@@ -180,12 +180,10 @@ public function update()
         die('Invalid request method');
     }
 
-    // ❌ rented tool cannot be updated
     if (!$this->toolService->canUpdateTool($toolId, $currentUser)) {
         die('This tool cannot be updated while it is rented.');
     }
 
-    // 🔹 Update basic tool info
     $data = [
         'name'          => $_POST['name'] ?? '',
         'price_per_day' => $_POST['price_per_day'] ?? '',
@@ -201,9 +199,6 @@ public function update()
         exit;
     }
 
-    /* =========================
-       🔥 IMAGE UPDATE PART
-       ========================= */
 
     if (!empty($_FILES['images']['name'][0])) {
 
@@ -213,7 +208,7 @@ public function update()
             mkdir($uploadDir, 0777, true);
         }
 
-        // 1️⃣ delete old images (filesystem)
+      
         $oldImages = $this->toolService->getImagesByToolId($toolId);
 
         foreach ($oldImages as $img) {
@@ -223,10 +218,10 @@ public function update()
             }
         }
 
-        // 2️⃣ delete old image records (DB)
+      
         $this->toolService->deleteImagesByToolId($toolId);
 
-        // 3️⃣ upload new images
+  
         foreach ($_FILES['images']['tmp_name'] as $index => $tmpName) {
 
             if ($_FILES['images']['error'][$index] !== 0) {
@@ -249,7 +244,6 @@ public function update()
         }
     }
 
-    // ✅ Redirect after everything
     header("Location: ?url=tool/myTools");
     exit;
 }

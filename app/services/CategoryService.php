@@ -67,9 +67,7 @@ class CategoryService
         return $this->categoryRepo->getAll();
     }
 
-    /* =========================
-       Active Categories (Public)
-       ========================= */
+    
     public function getActiveCategories(): array
     {
         return $this->categoryRepo->getActive();
@@ -78,7 +76,7 @@ class CategoryService
    
     public function updateCategoryStatus(string $id, string $status, array $currentUser): array
     {
-        // 🔒 Admin only
+       
         if ($currentUser['role'] !== 'ADMIN') {
             return [
                 'success' => false,
@@ -110,7 +108,7 @@ class CategoryService
   
 public function deleteCategory(string $id, array $currentUser): array
 {
-    // 🔒 Admin only
+   
     if ($currentUser['role'] !== 'ADMIN') {
         return [
             'success' => false,

@@ -11,10 +11,7 @@ class RentalLogController
         $this->logService = new RentalLogService();
     }
 
-    /* =========================
-       USER: View My Rental Logs
-       URL: ?url=rentalLog/my
-       ========================= */
+
     public function my()
     {
         $currentUser = $_SESSION['user'] ?? null;
@@ -28,10 +25,6 @@ class RentalLogController
         require __DIR__ . '/../views/rentalLog/myLogs.php';
     }
 
-    /* =========================
-       VENDOR: View My Tool Logs
-       URL: ?url=rentalLog/owner
-       ========================= */
     public function owner()
     {
         $currentUser = $_SESSION['user'] ?? null;
@@ -45,10 +38,6 @@ class RentalLogController
         require __DIR__ . '/../views/rentalLog/ownerLogs.php';
     }
 
-    /* =========================
-       ADMIN: View All Rental Logs
-       URL: ?url=rentalLog/admin
-       ========================= */
     public function admin()
     {
         $currentUser = $_SESSION['user'] ?? null;
@@ -62,10 +51,7 @@ class RentalLogController
         require __DIR__ . '/../views/rentalLog/adminLogs.php';
     }
 
-    /* =========================
-       ADMIN: Search Rental Logs
-       URL: ?url=rentalLog/search
-       ========================= */
+
     public function search()
     {
         $currentUser = $_SESSION['user'] ?? null;
@@ -88,10 +74,7 @@ class RentalLogController
         require __DIR__ . '/../views/rentalLog/adminLogs.php';
     }
 
-    /* =========================
-       USER: Download My Logs PDF
-       URL: ?url=rentalLog/downloadMyPdf
-       ========================= */
+ 
     public function downloadMyPdf()
     {
         $currentUser = $_SESSION['user'] ?? null;
@@ -99,10 +82,7 @@ class RentalLogController
         $this->logService->downloadMyLogsPdf($currentUser);
     }
 
-    /* =========================
-       VENDOR: Download Owner Logs PDF
-       URL: ?url=rentalLog/downloadOwnerPdf
-       ========================= */
+
     public function downloadOwnerPdf()
     {
         $currentUser = $_SESSION['user'] ?? null;
@@ -110,10 +90,6 @@ class RentalLogController
         $this->logService->downloadOwnerLogsPdf($currentUser);
     }
 
-    /* =========================
-       ADMIN: Download All Logs PDF
-       URL: ?url=rentalLog/downloadAllPdf
-       ========================= */
     public function downloadAllPdf()
     {
         $currentUser = $_SESSION['user'] ?? null;
@@ -121,10 +97,6 @@ class RentalLogController
         $this->logService->downloadAllLogsPdf($currentUser);
     }
 
-    /* =========================
-       ADMIN: Download Search Result PDF
-       URL: ?url=rentalLog/downloadSearchPdf
-       ========================= */
     public function downloadSearchPdf()
     {
         $currentUser = $_SESSION['user'] ?? null;
@@ -163,10 +135,7 @@ public function searchOwner()
 
     require __DIR__ . '/../views/rentalLog/ownerLogs.php';
 }
-/* =========================
-   USER: Search Own Rental Logs
-   URL: ?url=rentalLog/searchMy
-   ========================= */
+
 public function searchMy()
 {
     $currentUser = $_SESSION['user'] ?? null;

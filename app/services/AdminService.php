@@ -34,7 +34,7 @@ class AdminService
             ];
         }
 
-        // Email format check
+    
         if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
             return [
                 'success' => false,
@@ -78,7 +78,7 @@ class AdminService
 }
 public function deleteAdmin(string $adminId, string $currentAdminId): array
 {
-    // 🔒 Self-delete protection
+   
     if ($adminId === $currentAdminId) {
         return [
             'success' => false,
@@ -103,7 +103,7 @@ public function deleteAdmin(string $adminId, string $currentAdminId): array
 }
 public function changeUserStatus(string $targetUserId, string $newStatus, array $currentUser): array
 {
-    // 🔒 Only admin can do this
+   
     if ($currentUser['role'] !== 'ADMIN') {
         return [
             'success' => false,
@@ -111,7 +111,7 @@ public function changeUserStatus(string $targetUserId, string $newStatus, array 
         ];
     }
 
-    // 🔒 Admin cannot block/deactivate himself
+ 
     if ($targetUserId === $currentUser['id']) {
         return [
             'success' => false,
@@ -119,7 +119,7 @@ public function changeUserStatus(string $targetUserId, string $newStatus, array 
         ];
     }
 
-    // 🔒 Allowed status values
+  
     $allowedStatus = ['ACTIVE', 'BLOCKED', 'DEACTIVATED'];
 
     if (!in_array($newStatus, $allowedStatus)) {
@@ -129,7 +129,7 @@ public function changeUserStatus(string $targetUserId, string $newStatus, array 
         ];
     }
 
-    // 🔥 Repo call
+  
     $updated = $this->userRepo->updateStatus($targetUserId, $newStatus);
 
     if (!$updated) {

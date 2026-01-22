@@ -11,13 +11,10 @@ class CategoryController
         $this->categoryService = new CategoryService();
     }
 
-    /* =====================================
-       INDEX (List + Create Category)
-       URL: ?url=category/index
-       ===================================== */
+  
     public function index()
     {
-        // 🔒 Admin only
+      
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'ADMIN') {
             header("Location: ?url=user/login");
             exit;
@@ -26,7 +23,7 @@ class CategoryController
         $error   = null;
         $success = null;
 
-        // ➕ Create category
+      
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'] ?? '';
 
@@ -42,17 +39,14 @@ class CategoryController
             }
         }
 
-        // 📋 Get all categories
+    
         $categories = $this->categoryService->getAllCategories($_SESSION['user']);
 
         // 👁 View
         require __DIR__ . '/../views/category/index.php';
     }
 
-    /* =====================================
-       UPDATE STATUS (ACTIVE / INACTIVE)
-       URL: ?url=category/updateStatus&id=CAT_ID&status=ACTIVE|INACTIVE
-       ===================================== */
+
     public function updateStatus()
     {
         if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'ADMIN') {

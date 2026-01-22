@@ -11,9 +11,6 @@ class RentController
         $this->rentService = new RentService();
     }
 
-    /* =========================
-       Create Rent Request
-       ========================= */
     public function request()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -39,28 +36,20 @@ class RentController
         echo "<script>alert('{$result['message']}');history.back();</script>";
     }
 
-    /* =========================
-       Owner: View Incoming Requests
-       ========================= */
-    /* =========================
-   Owner: View Incoming Rent Requests
-   URL: ?url=rent/ownerRequests
-   ========================= */
-public function ownerRequests()
+    public function ownerRequests()
 {
     $currentUser = $_SESSION['user'] ?? null;
 
-    // 🔒 Login required
+  
     if (!$currentUser) {
         die('Unauthorized');
     }
 
-    // 🔒 Only owner / vendor (NOT admin)
     if ($currentUser['role'] === 'ADMIN') {
         die('Access denied');
     }
 
-    // 🔹 Get incoming requests for this owner
+
     $requests = $this->rentService
         ->getIncomingRequestsForOwner($currentUser['id']);
 
@@ -69,19 +58,16 @@ public function ownerRequests()
 }
 
 
-    /* =========================
-       User: View My Requests
-       ========================= */
+
     public function myRequests()
 {
     $currentUser = $_SESSION['user'] ?? null;
 
-    // 🔒 Login required
     if (!$currentUser) {
         die('Unauthorized');
     }
 
-    // 🔹 Call service (user = renter)
+
     $requests = $this->rentService
         ->getMyRentRequests($currentUser['id']);
 
@@ -89,9 +75,7 @@ public function ownerRequests()
     require __DIR__ . '/../views/rent/myRequest.php';
 }
 
-    /* =========================
-       Owner Accept
-       ========================= */
+
     public function accept()
     {
         $currentUser = $_SESSION['user'] ?? null;
@@ -102,9 +86,7 @@ public function ownerRequests()
         echo "<script>alert('{$result['message']}');history.back();</script>";
     }
 
-    /* =========================
-       Owner Reject
-       ========================= */
+  
     public function reject()
     {
         $currentUser = $_SESSION['user'] ?? null;
@@ -115,9 +97,6 @@ public function ownerRequests()
         echo "<script>alert('{$result['message']}');history.back();</script>";
     }
 
-    /* =========================
-       User Cancel
-       ========================= */
     public function cancel()
     {
         $currentUser = $_SESSION['user'] ?? null;
@@ -127,9 +106,7 @@ public function ownerRequests()
 
         echo "<script>alert('{$result['message']}');history.back();</script>";
     }
-    /* =========================
-   Renter: Request Return
-   ========================= */
+
 public function requestReturn()
 {
     $currentUser = $_SESSION['user'] ?? null;
@@ -147,9 +124,6 @@ public function requestReturn()
         history.back();
     </script>";
 }
-/* =========================
-   Owner: Confirm Return
-   ========================= */
 public function confirmReturn()
 {
     $currentUser = $_SESSION['user'] ?? null;
@@ -167,29 +141,26 @@ public function confirmReturn()
         history.back();
     </script>";
 }
-/* =========================
-   Admin: View All Rent Requests
-   URL: ?url=rent/adminRequests
-   ========================= */
+
 public function adminRequests()
 {
     $currentUser = $_SESSION['user'] ?? null;
 
-    // 🔒 Login required
+
     if (!$currentUser) {
         die('Unauthorized');
     }
 
-    // 🔒 Admin only
+
     if ($currentUser['role'] !== 'ADMIN') {
         die('Access denied');
     }
 
-    // 🔹 Get all rent requests (system view)
+ 
     $requests = $this->rentService
         ->getAllRentRequestsForAdmin();
 
-    // 🔹 Load admin view (next step)
+  
     require __DIR__ . '/../views/rent/adminRequest.php';
 }
 

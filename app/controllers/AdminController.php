@@ -31,15 +31,15 @@ class AdminController
         exit;
     }
 
-    // 🔥 Service call
+
     $vendors = $this->adminService->getAllVendors();
 
-    // 🔥 Load view
+   
     require __DIR__ . '/../views/admin/vendors.php';
 }
 public function manageAdmins()
 {
-    // 🔒 Admin protection
+  
     if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'ADMIN') {
         header("Location: ?url=user/login");
         exit;

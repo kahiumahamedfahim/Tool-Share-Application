@@ -3,9 +3,7 @@ require_once __DIR__ . '/../libs/fpdf.php';
 
 class PdfService extends FPDF
 {
-    /* =========================
-       HEADER (CORE FONT)
-       ========================= */
+
     public function Header(): void
     {
         $this->SetFont('Arial', 'B', 14);
